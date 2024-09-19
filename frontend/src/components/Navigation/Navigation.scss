@@ -1,0 +1,71 @@
+@use '../Utilities/colors';
+
+.nav {
+	position: relative;
+	width: 100%;
+	height: 8rem;
+	background-color: colors.$white;
+	box-shadow: 0rem 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+
+	&__list {
+		font-size: 2rem;
+		color: colors.$granite;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		list-style: none;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__list-element {
+		margin-left: 5rem;
+
+		&:first-child {
+			margin: 0;
+		}
+	}
+
+	&__elements-box {
+		position: absolute;
+		display: flex;
+		color: colors.$granite;
+		font-size: 3rem;
+		top: 0;
+		right: 2.5rem;
+		bottom: 0;
+		align-items: center;
+	}
+
+	&__elements {
+		display: flex;
+		align-items: center;
+		border: 0.1rem solid colors.$account-granite;
+		padding: 1rem;
+		border-radius: 1.5rem;
+		background: none;
+		color: colors.$granite;
+		font-size: 3rem;
+		cursor: pointer;
+		transition: color 0.1s, background-color 0.1s, box-shadow 0.1s;
+
+		&:hover {
+			color: colors.$white;
+			background-color: colors.$blue;
+			border: 0.1rem solid transparent;
+			box-shadow: 0 0 0.5rem colors.$blue;
+		}
+	}
+
+	&__alert {
+		margin-right: 5rem;
+	}
+
+	&__settings {
+		margin-left: 2rem;
+	}
+
+	&__name {
+		font-size: 2rem;
+	}
+}
