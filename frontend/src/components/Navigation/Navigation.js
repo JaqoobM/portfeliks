@@ -12,13 +12,20 @@ function Navigation() {
 						<FontAwesomeIcon icon={faBell} />
 					</span>
 
-					<button className='nav__elements'>
+					<div className='nav__elements'>
 						<p className='nav__name'>Jakub Myszka</p>
 
 						<span className='nav__settings'>
 							<FontAwesomeIcon icon={faGear} />
 						</span>
-					</button>
+
+						<div className='nav__menu-box'>
+							<ul className='nav__menu-list'>
+								<li className='nav__menu-element'>Ustawienia</li>
+								<li className='nav__menu-element'>Wyloguj</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 
 				<ul className='nav__list'>
