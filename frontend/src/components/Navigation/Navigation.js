@@ -2,30 +2,49 @@ import './Navigation.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 function Navigation() {
+	const [menu, setMenu] = useState(false);
+
+	let navBtn
+
+	useEffect(() => {
+		navBtn = document.querySelector('.nav__btn');
+	});
+
+	const menuHandler = () => {
+		setMenu(!menu);
+		navBtn.classList.toggle('nav__btn--border');
+	};
+
 	return (
 		<>
 			<nav className='nav'>
-				<div className='nav__elements-box'>
+				<div className='nav__btn-box'>
 					<span className='nav__alert'>
 						<FontAwesomeIcon icon={faBell} />
 					</span>
 
-					<div className='nav__elements'>
-						<p className='nav__name'>Jakub Myszka</p>
+					<button type='button' className='nav__btn' onClick={menuHandler}>
+						<p className='nav__name'>jm54706@outlook.com</p>
 
 						<span className='nav__settings'>
 							<FontAwesomeIcon icon={faGear} />
 						</span>
 
-						<div className='nav__menu-box'>
-							<ul className='nav__menu-list'>
-								<li className='nav__menu-element'>Ustawienia</li>
-								<li className='nav__menu-element'>Wyloguj</li>
-							</ul>
-						</div>
-					</div>
+						{menu && (
+							<div className='nav__menu-box'>
+								<ul className='nav__menu-list'>
+									<li className='nav__menu-element'>Ustawienia</li>
+									<div className='nav__menu-line'></div>
+									<li className='nav__menu-element'>Wyloguj</li>
+								</ul>
+
+								<div className='nav__menu-bg'></div>
+							</div>
+						)}
+					</button>
 				</div>
 
 				<ul className='nav__list'>
@@ -35,6 +54,8 @@ function Navigation() {
 					<li className='nav__list-element'>Oszczędności</li>
 				</ul>
 			</nav>
+
+			<div className='test'></div>
 		</>
 	);
 }

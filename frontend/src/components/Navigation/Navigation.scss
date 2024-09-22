@@ -1,11 +1,13 @@
 @use '../Utilities/colors';
 
 .nav {
-	position: absolute;
+	position: sticky;
+	top: 0;
 	width: 100%;
 	height: 8rem;
 	background-color: colors.$white;
 	box-shadow: 0rem 0.2rem 0.4rem rgba(0, 0, 0, 0.25);
+	display: none;
 
 	&__list {
 		font-size: 2rem;
@@ -26,7 +28,7 @@
 		}
 	}
 
-	&__elements-box {
+	&__btn-box {
 		position: absolute;
 		display: flex;
 		color: colors.$granite;
@@ -37,34 +39,28 @@
 		align-items: center;
 	}
 
-	&__elements {
+	&__btn {
 		position: relative;
 		display: flex;
 		align-items: center;
-		border: 1.1rem solid colors.$account-granite;
+		border: 0.1rem solid colors.$granite-light;
 		padding: 1rem;
+		width: 100%;
 		border-radius: 1.5rem;
 		background: none;
 		color: colors.$granite;
 		font-size: 3rem;
 		cursor: pointer;
-		transition: color 0.1s, background-color 0.1s, box-shadow 0.1s;
+		transition: color 0.1s, background-color 0.1s;
+	}
 
-		&:hover {
-			color: colors.$white;
-			background-color: colors.$blue;
-			// border: 0.1rem solid transparent;
-			box-shadow: 0 0 0.5rem colors.$blue;
-		}
-
-		&:focus {
-			border-radius: 1.5rem 1.5rem 0 0;
-		}
+	&__btn--border {
+		border-radius: 1.5rem 1.5rem 0 0
 	}
 
 	&__alert {
 		margin-right: 5rem;
-		border: 1.1rem solid colors.$account-granite
+		border: 1.1rem solid colors.$granite-light;
 	}
 
 	&__settings {
@@ -72,27 +68,37 @@
 	}
 
 	&__name {
-		font-size: 2rem;
+		font-size: 1.8rem;
 	}
 
 	&__menu-box {
-		background-color: colors.$icon-blue;
+		position: relative;
 		font-size: 1.6rem;
 		top: 100%;
-		// right: 0;
-		// left: 0;
-		width: 100%;
-		left: 0;
+		left: -0.1rem;
+		right: -0.1rem;
 		position: absolute;
-		border: 1.5rem solid colors.$account-granite;
+		border: 0.1rem solid colors.$granite-light;
 		border-radius: 0 0 1.5rem 1.5rem;
 		overflow: hidden;
+		z-index: 10;
+	}
+
+	&__menu-bg {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		background-color: colors.$white;
+		z-index: -1;
 	}
 
 	&__menu-list {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		align-items: center;
 		list-style: none;
 	}
 
@@ -104,4 +110,13 @@
 			color: colors.$blue;
 		}
 	}
+
+	&__menu-line {
+		border: .1rem solid colors.$granite-light;
+		width: 65%;
+	}
+}
+
+.test {
+	height: 150vh;
 }
