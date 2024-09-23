@@ -3,6 +3,11 @@
 	src: url('./fonts/Montserrat-VariableFont_wght.ttf');
 }
 
+@font-face {
+	font-family: 'Roboto';
+	src: url('./fonts/Roboto-Regular.ttf');
+}
+
 *,
 *::after,
 *::before {
@@ -16,7 +21,6 @@ html {
 }
 
 body {
-	font-family: 'Montserrat';
-	// font-size: 1.6rem;
-	font-size: 4rem;
+	font-family: 'Roboto';
+	font-size: 1.6rem;
 }
