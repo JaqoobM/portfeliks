@@ -135,9 +135,9 @@
 	}
 
 	&__menu-link {
-		font-size: 1.8rem;
+		font-size: 1.6rem;
 		text-decoration: none;
-		margin-bottom: 1.5rem;
+		margin-bottom: 1rem;
 		color: colors.$granite;
 		padding: 1.5rem 2.8rem 1.5rem;
 
@@ -147,7 +147,7 @@
 	}
 
 	&__menu-icon {
-		font-size: 2.2rem;
+		font-size: 2rem;
 		margin-right: 1.5rem;
 	}
 
@@ -168,12 +168,12 @@
 // BURGER MENU
 .burger-btn {
 	position: fixed;
-	font-size: 5.5rem;
-	z-index: 10000;
 	right: 1.7rem;
 	top: 1.6rem;
+	font-size: 5rem;
 	background: none;
 	padding: 0.6rem 1.5rem 0.6rem;
 	border: none;
 	color: colors.$blue;
+	z-index: 10000;
 }
