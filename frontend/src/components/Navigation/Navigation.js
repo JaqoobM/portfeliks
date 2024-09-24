@@ -21,7 +21,7 @@ function Navigation() {
 
 	useEffect(() => {
 		navBtn = document.querySelector('.nav__btn');
-		navMobile = document.querySelector('.nav-mobile__menu-container');
+		navMobile = document.querySelector('.nav-mobile');
 	});
 
 	const menuHandler = () => {
@@ -71,55 +71,53 @@ function Navigation() {
 			</nav> */}
 
 			<nav className='nav-mobile'>
-				<div className='nav-mobile__menu-container'>
+				<a href='#' className='nav-mobile__menu-link'>
+					<span className='nav-mobile__menu-icon'>
+						<FontAwesomeIcon icon={faChartLine} />
+					</span>
+					Panel
+				</a>
+				<a href='#' className='nav-mobile__menu-link'>
+					<span className='nav-mobile__menu-icon nav-mobile__transaction-icon'>
+						<FontAwesomeIcon icon={faMoneyBillTransfer} />
+					</span>
+					Transakcje
+				</a>
+				<a href='#' className='nav-mobile__menu-link'>
+					<span className='nav-mobile__menu-icon'>
+						<FontAwesomeIcon icon={faWallet} />
+					</span>
+					Portfele
+				</a>
+				<a href='#' className='nav-mobile__menu-link'>
+					<span className='nav-mobile__menu-icon'>
+						<FontAwesomeIcon icon={faSackDollar} />
+					</span>
+					Budżety
+				</a>
+				<a href='#' className='nav-mobile__menu-link'>
+					<span className='nav-mobile__menu-icon'>
+						<FontAwesomeIcon icon={faCoins} />
+					</span>
+					Oszczędności
+				</a>
+				<div className='nav-mobile__menu-settings-box'>
 					<a href='#' className='nav-mobile__menu-link'>
 						<span className='nav-mobile__menu-icon'>
-							<FontAwesomeIcon icon={faChartLine} />
+							<FontAwesomeIcon icon={faGear} />
 						</span>
-						Panel
-					</a>
-					<a href='#' className='nav-mobile__menu-link'>
-						<span className='nav-mobile__menu-icon nav-mobile__transaction-icon'>
-							<FontAwesomeIcon icon={faMoneyBillTransfer} />
-						</span>
-						Transakcje
+						Ustawienia
 					</a>
 					<a href='#' className='nav-mobile__menu-link'>
 						<span className='nav-mobile__menu-icon'>
-							<FontAwesomeIcon icon={faWallet} />
+							<FontAwesomeIcon icon={faArrowRightToBracket} />
 						</span>
-						Portfele
+						Wyloguj
 					</a>
-					<a href='#' className='nav-mobile__menu-link'>
-						<span className='nav-mobile__menu-icon'>
-							<FontAwesomeIcon icon={faSackDollar} />
-						</span>
-						Budżety
-					</a>
-					<a href='#' className='nav-mobile__menu-link'>
-						<span className='nav-mobile__menu-icon'>
-							<FontAwesomeIcon icon={faCoins} />
-						</span>
-						Oszczędności
-					</a>
-					<div className='nav-mobile__menu-settings-box'>
-						<a href='#' className='nav-mobile__menu-link'>
-							<span className='nav-mobile__menu-icon'>
-								<FontAwesomeIcon icon={faGear} />
-							</span>
-							Ustawienia
-						</a>
-						<a href='#' className='nav-mobile__menu-link'>
-							<span className='nav-mobile__menu-icon'>
-								<FontAwesomeIcon icon={faArrowRightToBracket} />
-							</span>
-							Wyloguj
-						</a>
-					</div>
 				</div>
 			</nav>
 
-			<button className='nav-mobile__burger-btn' onClick={mobileMenuHandler}>
+			<button className='burger-btn' onClick={mobileMenuHandler}>
 				<FontAwesomeIcon icon={faBars} />
 			</button>
 		</>
