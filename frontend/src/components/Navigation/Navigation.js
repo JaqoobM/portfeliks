@@ -18,10 +18,14 @@ function Navigation() {
 
 	let navBtn;
 	let navMobile;
+	let menuIconsArr;
+	let menuTextsArr;
 
 	useEffect(() => {
 		navBtn = document.querySelector('.nav__btn');
 		navMobile = document.querySelector('.nav-mobile');
+		menuIconsArr = document.querySelectorAll('#menuIcon');
+		menuTextsArr = document.querySelectorAll('#menuText');
 	});
 
 	const menuHandler = () => {
@@ -29,8 +33,18 @@ function Navigation() {
 		navBtn.classList.toggle('nav__btn--border');
 	};
 
-	const mobileMenuHandler = () => {
-		navMobile?.classList.toggle('nav-mobile__menu-active');
+	const mobileMenuHandler = (btn) => {
+		if (btn.includes('burger-btn-mobile')) {
+			navMobile?.classList.toggle('nav-mobile__menu-active-mobile');
+		} else {
+			menuIconsArr.forEach((icon) => {
+				icon.classList.toggle('nav-mobile__menu-inactive-desktop');
+			});
+
+			menuTextsArr.forEach((text) => {
+				text.classList.toggle('nav-mobile__menu-text-disabled')
+			})
+		}
 	};
 
 	return (
@@ -72,52 +86,82 @@ function Navigation() {
 
 			<nav className='nav-mobile'>
 				<a href='#' className='nav-mobile__menu-link'>
-					<span className='nav-mobile__menu-icon'>
+					<span id='menuIcon' className='nav-mobile__menu-icon'>
 						<FontAwesomeIcon icon={faChartLine} />
 					</span>
-					Panel
+					<span id='menuText' className='nav-mobile__menu-text'>
+						Panel
+					</span>
 				</a>
 				<a href='#' className='nav-mobile__menu-link'>
-					<span className='nav-mobile__menu-icon nav-mobile__transaction-icon'>
+					<span
+						id='menuIcon'
+						className='nav-mobile__menu-icon nav-mobile__transaction-icon'>
 						<FontAwesomeIcon icon={faMoneyBillTransfer} />
 					</span>
-					Transakcje
+					<span id='menuText' className='nav-mobile__menu-text'>
+						Transakcje
+					</span>
 				</a>
 				<a href='#' className='nav-mobile__menu-link'>
-					<span className='nav-mobile__menu-icon'>
+					<span id='menuIcon' className='nav-mobile__menu-icon'>
 						<FontAwesomeIcon icon={faWallet} />
 					</span>
-					Portfele
+					<span id='menuText' className='nav-mobile__menu-text'>
+						Portfele
+					</span>
 				</a>
 				<a href='#' className='nav-mobile__menu-link'>
-					<span className='nav-mobile__menu-icon'>
+					<span id='menuIcon' className='nav-mobile__menu-icon'>
 						<FontAwesomeIcon icon={faSackDollar} />
 					</span>
-					Budżety
+					<span id='menuText' className='nav-mobile__menu-text'>
+						Budżety
+					</span>
 				</a>
 				<a href='#' className='nav-mobile__menu-link'>
-					<span className='nav-mobile__menu-icon'>
+					<span id='menuIcon' className='nav-mobile__menu-icon'>
 						<FontAwesomeIcon icon={faCoins} />
 					</span>
-					Oszczędności
+					<span id='menuText' className='nav-mobile__menu-text'>
+						Oszczędności
+					</span>
 				</a>
 				<div className='nav-mobile__menu-settings-box'>
 					<a href='#' className='nav-mobile__menu-link'>
-						<span className='nav-mobile__menu-icon'>
+						<span id='menuIcon' className='nav-mobile__menu-icon'>
 							<FontAwesomeIcon icon={faGear} />
 						</span>
-						Ustawienia
+						<span id='menuText' className='nav-mobile__menu-text'>
+							Ustawienia
+						</span>
 					</a>
 					<a href='#' className='nav-mobile__menu-link'>
-						<span className='nav-mobile__menu-icon'>
+						<span id='menuIcon' className='nav-mobile__menu-icon'>
 							<FontAwesomeIcon icon={faArrowRightToBracket} />
 						</span>
-						Wyloguj
+						<span id='menuText' className='nav-mobile__menu-text'>
+							Wyloguj
+						</span>
 					</a>
 				</div>
 			</nav>
 
-			<button className='burger-btn' onClick={mobileMenuHandler}>
+			<button
+				className='burger-btns burger-btn-mobile'
+				onClick={(e) => {
+					const btn = e.target.closest('button').className;
+					mobileMenuHandler(btn);
+				}}>
+				<FontAwesomeIcon icon={faBars} />
+			</button>
+
+			<button
+				className='burger-btns burger-btn-desktop'
+				onClick={(e) => {
+					const btn = e.target.closest('button').className;
+					mobileMenuHandler(btn);
+				}}>
 				<FontAwesomeIcon icon={faBars} />
 			</button>
 		</>
