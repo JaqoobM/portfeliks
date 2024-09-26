@@ -9,78 +9,66 @@ import {
 	faSackDollar,
 	faCoins,
 	faArrowRightToBracket,
-	faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 function Navigation() {
-	const [menu, setMenu] = useState(false);
 	const [menuIsOpen, setMenuIsOpen] = useState(true);
 
-	let navBtn;
-	let navMobile;
+	let nav;
 	let menuIconsArr;
 	let menuTextsArr;
-	let desktopBurgerBtn;
+	let burgerBtnDesktop;
 
 	useEffect(() => {
-		desktopBurgerBtn = document.querySelector('.burger-btn-desktop');
-		navMobile = document.querySelector('.nav-mobile');
+		burgerBtnDesktop = document.querySelector('#burgerBtnDesktop');
+		nav = document.querySelector('.nav');
 		menuIconsArr = document.querySelectorAll('#menuIcon');
 		menuTextsArr = document.querySelectorAll('#menuText');
 	});
 
-	const menuHandler = () => {
-		setMenu(!menu);
-		navBtn.classList.toggle('nav__btn--border');
-	};
-
-	const mobileMenuHandler = (btn) => {
-		if (btn.includes('burger-btn-mobile')) {
-			navMobile?.classList.toggle('nav-mobile__menu-active-mobile');
+	const mobileMenuHandler = (btnId) => {
+		if (btnId === 'burgerBtnMobile') {
+			nav?.classList.toggle('nav-mobile-activated');
 		} else {
 			switch (menuIsOpen) {
 				case true:
 					menuIconsArr.forEach((icon) => {
-						icon.classList.toggle('nav-mobile__menu-inactive-desktop');
+						icon.classList.add('nav-icons-margin-off');
 					});
-
 					menuTextsArr.forEach((text) => {
-						text.classList.toggle('nav-mobile__menu-text-disabled');
+						text.classList.add('nav-texts-disabled');
 					});
-					setMenuIsOpen(false)
+					setMenuIsOpen(false);
 					break;
 				case false:
 					setTimeout(() => {
-						menuIconsArr.forEach((icon) => {
-							icon.classList.toggle('nav-mobile__menu-inactive-desktop');
-						});
-
 						menuTextsArr.forEach((text) => {
-							text.classList.toggle('nav-mobile__menu-text-disabled');
+							text.classList.remove('nav-texts-disabled');
 						});
 					}, 100);
-					setMenuIsOpen(true)
+					menuIconsArr.forEach((icon) => {
+						icon.classList.remove('nav-icons-margin-off');
+					});
+					setMenuIsOpen(true);
 					break;
-
 				default:
 					break;
 			}
-
-			desktopBurgerBtn.firstChild.classList.toggle('burger-rotate');
-
-			navMobile.classList.toggle('nav-small');
+			burgerBtnDesktop.firstChild.classList.toggle('burger-rotate');
+			nav.classList.toggle('nav-small');
 		}
 	};
 
 	return (
 		<>
 			<button
+				id='burgerBtnMobile'
+				className='burger-btns burger-btn-mobile'
 				onClick={(e) => {
-					const btn = e.target.closest('button').className;
-					mobileMenuHandler(btn);
-				}}
-				className='burger-btns burger-btn-mobile'>
+					const btnId = e.target.closest('button').id;
+					mobileMenuHandler(btnId);
+				}}>
 				<div className='burger-btns__box'>
 					<div className='burger-btns__bars burger-btn-mobile__bar1'></div>
 					<div className='burger-btns__bars burger-btn-mobile__bar2'></div>
@@ -88,13 +76,14 @@ function Navigation() {
 				</div>
 			</button>
 
-			<nav className='nav-mobile'>
+			<nav className='nav'>
 				<button
+					id='burgerBtnDesktop'
+					className='burger-btns burger-btn-desktop'
 					onClick={(e) => {
-						const btn = e.target.closest('button').className;
-						mobileMenuHandler(btn);
-					}}
-					className='burger-btns burger-btn-desktop'>
+						const btnId = e.target.closest('button').id;
+						mobileMenuHandler(btnId);
+					}}>
 					<div className='burger-btns__box'>
 						<div className='burger-btns__bars'></div>
 						<div className='burger-btns__bars'></div>
@@ -102,62 +91,60 @@ function Navigation() {
 					</div>
 				</button>
 
-				<a href='#' className='nav-mobile__menu-link'>
-					<span id='menuIcon' className='nav-mobile__menu-icon'>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon'>
 						<FontAwesomeIcon icon={faChartLine} />
 					</span>
-					<span id='menuText' className='nav-mobile__menu-text'>
+					<span id='menuText' className='nav__menu-text'>
 						Panel
 					</span>
 				</a>
-				<a href='#' className='nav-mobile__menu-link'>
-					<span
-						id='menuIcon'
-						className='nav-mobile__menu-icon nav-mobile__transaction-icon'>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon nav__transaction-icon'>
 						<FontAwesomeIcon icon={faMoneyBillTransfer} />
 					</span>
-					<span id='menuText' className='nav-mobile__menu-text'>
+					<span id='menuText' className='nav__menu-text'>
 						Transakcje
 					</span>
 				</a>
-				<a href='#' className='nav-mobile__menu-link'>
-					<span id='menuIcon' className='nav-mobile__menu-icon'>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon'>
 						<FontAwesomeIcon icon={faWallet} />
 					</span>
-					<span id='menuText' className='nav-mobile__menu-text'>
+					<span id='menuText' className='nav__menu-text'>
 						Portfele
 					</span>
 				</a>
-				<a href='#' className='nav-mobile__menu-link'>
-					<span id='menuIcon' className='nav-mobile__menu-icon'>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon'>
 						<FontAwesomeIcon icon={faSackDollar} />
 					</span>
-					<span id='menuText' className='nav-mobile__menu-text'>
+					<span id='menuText' className='nav__menu-text'>
 						Budżety
 					</span>
 				</a>
-				<a href='#' className='nav-mobile__menu-link'>
-					<span id='menuIcon' className='nav-mobile__menu-icon'>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon'>
 						<FontAwesomeIcon icon={faCoins} />
 					</span>
-					<span id='menuText' className='nav-mobile__menu-text'>
+					<span id='menuText' className='nav__menu-text'>
 						Oszczędności
 					</span>
 				</a>
-				<div className='nav-mobile__menu-settings-box'>
-					<a href='#' className='nav-mobile__menu-link'>
-						<span id='menuIcon' className='nav-mobile__menu-icon'>
+				<div className='nav__menu-settings-box'>
+					<a href='#' className='nav__menu-link'>
+						<span id='menuIcon' className='nav__menu-icon'>
 							<FontAwesomeIcon icon={faGear} />
 						</span>
-						<span id='menuText' className='nav-mobile__menu-text'>
+						<span id='menuText' className='nav__menu-text'>
 							Ustawienia
 						</span>
 					</a>
-					<a href='#' className='nav-mobile__menu-link'>
-						<span id='menuIcon' className='nav-mobile__menu-icon'>
+					<a href='#' className='nav__menu-link'>
+						<span id='menuIcon' className='nav__menu-icon'>
 							<FontAwesomeIcon icon={faArrowRightToBracket} />
 						</span>
-						<span id='menuText' className='nav-mobile__menu-text'>
+						<span id='menuText' className='nav__menu-text'>
 							Wyloguj
 						</span>
 					</a>
