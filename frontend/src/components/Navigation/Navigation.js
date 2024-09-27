@@ -19,9 +19,17 @@ function Navigation() {
 	let menuIconsArr;
 	let menuTextsArr;
 	let burgerBtnDesktop;
+	let burgerBtnMobile;
+	let bar1;
+	let bar2;
+	let bar3;
 
 	useEffect(() => {
+		bar1 = document.querySelector('#bar1')
+		bar2 = document.querySelector('#bar2')
+		bar3 = document.querySelector('#bar3')
 		burgerBtnDesktop = document.querySelector('#burgerBtnDesktop');
+		burgerBtnMobile = document.querySelector('#burgerBtnMobile');
 		nav = document.querySelector('.nav');
 		menuIconsArr = document.querySelectorAll('#menuIcon');
 		menuTextsArr = document.querySelectorAll('#menuText');
@@ -30,6 +38,11 @@ function Navigation() {
 	const mobileMenuHandler = (btnId) => {
 		if (btnId === 'burgerBtnMobile') {
 			nav?.classList.toggle('nav-mobile-activated');
+			burgerBtnMobile.classList.toggle('btn-x-wispan')
+			bar1?.classList.toggle('bar1-x')
+			bar2?.classList.toggle('bar2-x')
+			bar3?.classList.toggle('bar3-x')
+
 		} else {
 			switch (menuIsOpen) {
 				case true:
@@ -70,9 +83,9 @@ function Navigation() {
 					mobileMenuHandler(btnId);
 				}}>
 				<div className='burger-btns__box'>
-					<div className='burger-btns__bars burger-btn-mobile__bar1'></div>
-					<div className='burger-btns__bars burger-btn-mobile__bar2'></div>
-					<div className='burger-btns__bars burger-btn-mobile__bar3'></div>
+					<span id='bar1' className='burger-btns__bars burger-btn-mobile__bar1'></span>
+					<span id='bar2' className='burger-btns__bars burger-btn-mobile__bar2'></span>
+					<span id='bar3' className='burger-btns__bars burger-btn-mobile__bar3'></span>
 				</div>
 			</button>
 
