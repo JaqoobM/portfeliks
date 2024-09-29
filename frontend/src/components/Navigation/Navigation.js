@@ -38,7 +38,7 @@ function Navigation() {
 	const mobileMenuHandler = (btnId) => {
 		if (btnId === 'burgerBtnMobile') {
 			nav?.classList.toggle('nav-mobile-activated');
-			burgerBtnMobile.classList.toggle('btn-x-wispan')
+			burgerBtnMobile?.classList.toggle('btn-x-wispan')
 			bar1?.classList.toggle('bar1-x')
 			bar2?.classList.toggle('bar2-x')
 			bar3?.classList.toggle('bar3-x')
