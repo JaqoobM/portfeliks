@@ -9,6 +9,7 @@ import {
 	faSackDollar,
 	faCoins,
 	faArrowRightToBracket,
+	faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
@@ -25,9 +26,9 @@ function Navigation() {
 	let bar3;
 
 	useEffect(() => {
-		bar1 = document.querySelector('#bar1')
-		bar2 = document.querySelector('#bar2')
-		bar3 = document.querySelector('#bar3')
+		bar1 = document.querySelector('#bar1');
+		bar2 = document.querySelector('#bar2');
+		bar3 = document.querySelector('#bar3');
 		burgerBtnDesktop = document.querySelector('#burgerBtnDesktop');
 		burgerBtnMobile = document.querySelector('#burgerBtnMobile');
 		nav = document.querySelector('.nav');
@@ -38,11 +39,10 @@ function Navigation() {
 	const mobileMenuHandler = (btnId) => {
 		if (btnId === 'burgerBtnMobile') {
 			nav?.classList.toggle('nav-mobile-activated');
-			burgerBtnMobile?.classList.toggle('btn-x-wispan')
-			bar1?.classList.toggle('bar1-x')
-			bar2?.classList.toggle('bar2-x')
-			bar3?.classList.toggle('bar3-x')
-
+			burgerBtnMobile?.classList.toggle('btn-x-wispan');
+			bar1?.classList.toggle('bar1-x');
+			bar2?.classList.toggle('bar2-x');
+			bar3?.classList.toggle('bar3-x');
 		} else {
 			switch (menuIsOpen) {
 				case true:
@@ -75,7 +75,7 @@ function Navigation() {
 
 	return (
 		<>
-			<button
+			{/* <button
 				id='burgerBtnMobile'
 				className='burger-btns burger-btn-mobile'
 				onClick={(e) => {
@@ -87,20 +87,20 @@ function Navigation() {
 					<span id='bar2' className='burger-btns__bars burger-btn-mobile__bar2'></span>
 					<span id='bar3' className='burger-btns__bars burger-btn-mobile__bar3'></span>
 				</div>
-			</button>
+			</button> */}
 
 			<nav className='nav'>
 				<button
 					id='burgerBtnDesktop'
-					className='burger-btns burger-btn-desktop'
+					className='burger-btn'
 					onClick={(e) => {
 						const btnId = e.target.closest('button').id;
 						mobileMenuHandler(btnId);
 					}}>
-					<div className='burger-btns__box'>
-						<div className='burger-btns__bars'></div>
-						<div className='burger-btns__bars'></div>
-						<div className='burger-btns__bars'></div>
+					<div className='burger-btn__box' type='button'>
+						<span className='burger-btn__bar'></span>
+						<span className='burger-btn__bar'></span>
+						<span className='burger-btn__bar'></span>
 					</div>
 				</button>
 
@@ -130,20 +130,21 @@ function Navigation() {
 				</a>
 				<a href='#' className='nav__menu-link'>
 					<span id='menuIcon' className='nav__menu-icon'>
-						<FontAwesomeIcon icon={faSackDollar} />
-					</span>
-					<span id='menuText' className='nav__menu-text'>
-						Budżety
-					</span>
-				</a>
-				<a href='#' className='nav__menu-link'>
-					<span id='menuIcon' className='nav__menu-icon'>
 						<FontAwesomeIcon icon={faCoins} />
 					</span>
 					<span id='menuText' className='nav__menu-text'>
 						Oszczędności
 					</span>
 				</a>
+				<a href='#' className='nav__menu-link'>
+					<span id='menuIcon' className='nav__menu-icon'>
+						<FontAwesomeIcon icon={faSackDollar} />
+					</span>
+					<span id='menuText' className='nav__menu-text'>
+						Budżety
+					</span>
+				</a>
+
 				<div className='nav__menu-settings-box'>
 					<a href='#' className='nav__menu-link'>
 						<span id='menuIcon' className='nav__menu-icon'>
@@ -163,6 +164,41 @@ function Navigation() {
 					</a>
 				</div>
 			</nav>
+
+			<nav className='nav-mobile-app'>
+				<button className='nav-mobile-app__box nav-mobile-app__box1'>
+					<span className='nav-mobile-app__icon'>
+						<FontAwesomeIcon icon={faChartLine} />
+					</span>
+					<span className='nav-mobile-app__text'>Panel</span>
+				</button>
+				<button className='nav-mobile-app__box nav-mobile-app__box2'>
+					<span className='nav-mobile-app__icon'>
+						<FontAwesomeIcon icon={faMoneyBillTransfer} />
+					</span>
+					<span className='nav-mobile-app__text'>Transakcje</span>
+				</button>
+				<button className='nav-mobile-app__box nav-mobile-app__box3'>
+					<span className='nav-mobile-app__icon'>
+						<FontAwesomeIcon icon={faWallet} />
+					</span>
+					<span className='nav-mobile-app__text'>Portfele</span>
+				</button>
+				<button className='nav-mobile-app__box nav-mobile-app__box4'>
+					<span className='nav-mobile-app__icon'>
+						<FontAwesomeIcon icon={faCoins} />
+					</span>
+					<span className='nav-mobile-app__text'>Oszczędności</span>
+				</button>
+				<button className='nav-mobile-app__box nav-mobile-app__box5'>
+					<span className='nav-mobile-app__icon'>
+						<FontAwesomeIcon icon={faSackDollar} />
+					</span>
+					<span className='nav-mobile-app__text'>Budżety</span>
+				</button>
+			</nav>
+
+			
 		</>
 	);
 }

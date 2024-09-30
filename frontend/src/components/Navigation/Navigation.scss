@@ -5,12 +5,15 @@
 	position: fixed;
 	top: 0;
 	bottom: 0;
+	left: 0;
 	width: 19.2rem;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	transform: translateX(100%);
-	transition: transform 0.2s, box-shadow 0.2s, width 0.1s;
+	transform: translateX(0);
+	box-shadow: 0.2rem 0 0.4rem rgba(0, 0, 0, 0.25);
+	display: none;
+	transition: width 0.1s;
 
 	&__menu-link {
 		font-size: 1.6rem;
@@ -52,11 +55,6 @@
 	}
 }
 
-.nav-mobile-activated {
-	transform: translateX(0);
-	box-shadow: -0.2rem 0 0.4rem rgba(0, 0, 0, 0.25);
-}
-
 .nav-texts-disabled {
 	display: none;
 }
@@ -68,17 +66,78 @@
 .nav-small {
 	width: 8.1rem;
 }
+// NAV MOBILE
+.nav-mobile-app {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	height: 5.5rem;
+	display: grid;
+	grid: repeat(6, 1fr);
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+	background-color: #ffffff;
+
+	&__box {
+		color: colors.$granite;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: none;
+		border: none;
+	}
+
+	&__box1 {
+		grid-column: 1/2;
+	}
+
+	&__box2 {
+		grid-column: 2/3;
+	}
+
+	&__box3 {
+		grid-column: 3/4;
+	}
+
+	&__box4 {
+		grid-column: 4/5;
+	}
+
+	&__box5 {
+		grid-column: 5/6;
+	}
+
+	&__icon {
+		font-size: 2.5rem;
+	}
+
+	&__text {
+		color: colors.$granite-nav-icons;
+		margin-top: 0.3rem;
+		font-size: 1rem;
+	}
+}
 
 // BURGER MENU
-.burger-btns {
+.burger-btn {
 	position: fixed;
 	top: 1rem;
+	left: 1rem;
 	background: none;
 	border: none;
 	width: 6rem;
 	height: 5rem;
 	z-index: 10000;
 	display: none;
+	padding: 1.6rem;
+	transition: background-color 0.1s, border-radius 0.1s;
+	cursor: pointer;
+
+	&:hover {
+		border-radius: 50%;
+		background-color: colors.$light-blue;
+	}
 
 	&__box {
 		height: 100%;
@@ -89,62 +148,9 @@
 		transition: transform 0.1s;
 	}
 
-	&__bars {
+	&__bar {
 		border-radius: 1rem;
 		border: 0.1rem solid colors.$blue;
-	}
-}
-// BURGER MENU MOBILE
-.burger-btn-mobile {
-	padding: 1.4rem;
-	right: 1rem;
-	display: none;
-	transition: width 0.2s;
-
-	&__bar1 {
-		border: 0.2rem solid colors.$blue;
-		transform-origin: top left;
-		transition: transform 0.2s;
-	}
-
-	&__bar2 {
-		border: 0.2rem solid colors.$blue;
-		transition: opacity 0.2s;
-	}
-
-	&__bar3 {
-		border: 0.2rem solid colors.$blue;
-		transform-origin: bottom left;
-		transition: transform 0.2s;
-	}
-}
-
-.btn-x-width {
-	width: 5.7rem;
-}
-
-.bar1-x {
-	transform: rotate(37deg);
-}
-
-.bar2-x {
-	opacity: 0;
-}
-
-.bar3-x {
-	transform: rotate(-37deg);
-}
-
-// BURGER MENU DESKTOP
-.burger-btn-desktop {
-	padding: 1.6rem;
-	left: 1rem;
-	transition: background-color 0.1s, border-radius 0.1s;
-	cursor: pointer;
-
-	&:hover {
-		border-radius: 50%;
-		background-color: colors.$light-blue;
 	}
 }
 
@@ -152,24 +158,18 @@
 	transform: rotate(90deg);
 }
 
-@media (max-width: 991px) {
-	.nav {
-		right: 0;
-	}
-
-	.burger-btn-mobile {
-		display: block;
-	}
-}
+// @media (max-width: 991px) {
+// }
 
 @media (min-width: 992px) {
 	.nav {
-		transform: translateX(0);
-		left: 0;
-		box-shadow: 0.2rem 0 0.4rem rgba(0, 0, 0, 0.25);
+		display: flex;
+	}
+	.nav-mobile-app {
+		display: none;
 	}
 
-	.burger-btn-desktop {
+	.burger-btn {
 		display: block;
 	}
 }
