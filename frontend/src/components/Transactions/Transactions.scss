@@ -14,6 +14,7 @@
 	&__input-box {
 		width: 100%;
 		position: relative;
+		margin-right: 6.5rem;
 	}
 
 	&__input {
@@ -50,23 +51,49 @@
 	}
 
 	&__burger-btn {
+		position: fixed;
+		right: 0;
+		top: 0.6rem;
 		margin-left: 1rem;
 		margin-right: 1rem;
 		padding: 0.8rem;
 		width: 4.5rem;
-		height: 3.5rem;
+		height: 3.8rem;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		background: none;
 		border: none;
 		color: colors.$black;
+		z-index: 10000;
 	}
 
 	&__burger-bar {
 		width: 100%;
-		border: 0.1rem solid;
+		border: 0.2rem solid colors.$blue;
+		border-radius: 1rem;
+		transition: transform 0.2s, opacity 0.2s;
 	}
+
+	&__burger-bar1 {
+		transform-origin: top left;
+	}
+
+	&__burger-bar3 {
+		transform-origin: bottom left;
+	}
+}
+
+.filter-bar1-x {
+	transform: rotate(41deg);
+}
+
+.filter-bar2-x {
+	opacity: 0;
+}
+
+.filter-bar3-x {
+	transform: rotate(-40deg);
 }
 
 // BOTTOM BUTTONS
@@ -120,11 +147,12 @@
 	right: 0;
 	width: 21rem;
 	background-color: colors.$white;
-	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	overflow: scroll;
+	transform: translateX(100%);
+	transition: transform 0.2s, box-shadow 0.2s;
 
 	&__title {
 		margin-top: 8rem;
@@ -162,6 +190,11 @@
 		margin-top: 0.6rem;
 		margin-left: 1.2rem;
 	}
+}
+
+.filters-activated {
+	transform: translateX(0);
+	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 }
 
 @media (min-width: 992px) {

@@ -8,8 +8,26 @@ import {
 	faPlus,
 	faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { useEffect } from 'react';
 
 function Transactions() {
+	let filterBtn;
+	let filterBar1
+	let filterBar2
+	let filterBar3
+
+	useEffect(() => {
+		filterBtn = document.querySelector('#transactionsFilters');
+		filterBar1 = document.querySelector('#filterBar1');
+		filterBar2 = document.querySelector('#filterBar2');
+		filterBar3 = document.querySelector('#filterBar3');
+	});
+	const filtersHandler = () => {
+		filterBtn?.classList.toggle('filters-activated');
+		filterBar1?.classList.toggle('filter-bar1-x')
+		filterBar2?.classList.toggle('filter-bar2-x')
+		filterBar3?.classList.toggle('filter-bar3-x')
+	};
 	return (
 		<>
 			<Navigation />
@@ -28,12 +46,6 @@ function Transactions() {
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</span>
 				</div>
-
-				<button className='top-bar-app__burger-btn' type='button'>
-					<span className='top-bar-app__burger-bar'></span>
-					<span className='top-bar-app__burger-bar'></span>
-					<span className='top-bar-app__burger-bar'></span>
-				</button>
 			</div>
 
 			<div className='transaction-btns'>
@@ -62,7 +74,16 @@ function Transactions() {
 				</button>
 			</div>
 
-			<div className='transactions-filters'>
+			<button
+				className='top-bar-app__burger-btn'
+				type='button'
+				onClick={filtersHandler}>
+					<span id='filterBar1' className='top-bar-app__burger-bar top-bar-app__burger-bar1'></span>
+					<span id='filterBar2' className='top-bar-app__burger-bar top-bar-app__burger-bar2'></span>
+					<span id='filterBar3' className='top-bar-app__burger-bar top-bar-app__burger-bar3'></span>
+			</button>
+
+			<div id='transactionsFilters' className='transactions-filters'>
 				<span className='transactions-filters__title'>Filtry</span>
 
 				<button
