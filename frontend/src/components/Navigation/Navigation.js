@@ -9,7 +9,6 @@ import {
 	faSackDollar,
 	faCoins,
 	faArrowRightToBracket,
-	faEllipsisVertical,
 } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
