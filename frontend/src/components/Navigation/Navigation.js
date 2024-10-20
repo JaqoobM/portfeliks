@@ -74,20 +74,6 @@ function Navigation() {
 
 	return (
 		<>
-			{/* <button
-				id='burgerBtnMobile'
-				className='burger-btns burger-btn-mobile'
-				onClick={(e) => {
-					const btnId = e.target.closest('button').id;
-					mobileMenuHandler(btnId);
-				}}>
-				<div className='burger-btns__box'>
-					<span id='bar1' className='burger-btns__bars burger-btn-mobile__bar1'></span>
-					<span id='bar2' className='burger-btns__bars burger-btn-mobile__bar2'></span>
-					<span id='bar3' className='burger-btns__bars burger-btn-mobile__bar3'></span>
-				</div>
-			</button> */}
-
 			<nav className='nav'>
 				<button
 					id='burgerBtnDesktop'

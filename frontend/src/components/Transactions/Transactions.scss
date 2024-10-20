@@ -181,168 +181,7 @@
 }
 
 // FILTERS
-.transactions-filters {
-	position: fixed;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	width: 21rem;
-	overflow: hidden;
 
-	&__container {
-		position: absolute;
-		height: 100%;
-		width: 100%;
-		background-color: colors.$white;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		overflow: scroll;
-		transform: translateX(100%);
-		transition: transform 0.2s, box-shadow 0.2s;
-		z-index: 1000;
-	}
-
-	&__title {
-		margin-top: 8rem;
-	}
-
-	&__btn {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		background: none;
-		border: none;
-		border-block: 0.1rem solid colors.$blue;
-		width: 100%;
-		padding: 2.1rem 0 2.1rem;
-		margin-top: 1.8rem;
-		color: colors.$blue;
-	}
-
-	&__text-btn {
-		font-size: 1.4rem;
-		margin-left: 1rem;
-	}
-
-	&__arrow {
-		margin-right: 1rem;
-	}
-
-	&__icon {
-		margin-left: 0.5rem;
-	}
-
-	&__text-box {
-		width: 100%;
-	}
-
-	&__text {
-		font-size: 1.1rem;
-		margin-top: 0.6rem;
-		margin-left: 1.2rem;
-	}
-
-	&__category-date {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		background-color: colors.$white;
-		transform: translateX(100%);
-		transition: transform 0.2s;
-		z-index: 1000000;
-	}
-
-	&__date-back-arrow-btn {
-		position: absolute;
-		top: 0;
-		left: 0;
-		padding: 1.2rem 2rem 2rem 2rem;
-		background: none;
-		border: none;
-	}
-
-	&__date-arrow {
-		font-size: 2.5rem;
-		color: colors.$orange;
-	}
-
-	&__date-btns {
-		position: relative;
-		font-size: 1.4rem;
-		margin-top: 7rem;
-		background: none;
-		border: 0.1rem solid colors.$blue;
-		padding: 2rem 1rem 2rem;
-		width: 95%;
-		border-radius: 1rem;
-		display: flex;
-		justify-content: space-between;
-	}
-
-	&__date-btns-arrow {
-		color: colors.$blue;
-		transition: transform 0.1s;
-	}
-
-	&__date-btns-label {
-		font-size: 1.2rem;
-		background-color: colors.$white;
-		padding: 0 0.5rem 0;
-		position: absolute;
-		top: -0.8rem;
-		left: 1.5rem;
-		color: colors.$blue;
-	}
-
-	&__date-btns-lists {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: start;
-		transform: translateY(100%);
-		background-color: colors.$white;
-		width: 100%;
-		padding: 1rem;
-		border: 0.1rem solid colors.$blue;
-		border-radius: 1rem;
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-		display: none;
-	}
-
-	&__date-btns-list-el {
-		padding: 2rem 0 2rem;
-		list-style: none;
-	}
-}
-
-.month-btn-border {
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-}
-
-.chevron-rotated {
-	transform: rotate(180deg);
-}
-
-.months-activated {
-	display: flex;
-}
-
-.category-date-activated {
-	transform: translateX(0);
-}
-
-.filters-activated {
-	transform: translateX(0);
-	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
-}
 
 // TRANSACTIONS
 .transactions {
@@ -353,12 +192,10 @@
 	margin: 0 1rem 0;
 	z-index: -1;
 
-	&__container {
-		width: 100%;
-	}
-
 	&__date {
+		display: inline-block;
 		margin-left: 1rem;
+		margin-top: 1rem;
 		font-size: 1.2rem;
 		color: colors.$blue;
 	}
@@ -368,10 +205,11 @@
 		align-items: center;
 		min-height: 4.9rem;
 		border-radius: 1.5rem;
+		border-bottom: .1rem solid colors.$granite-light;
 		background-color: colors.$white;
-		box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+		// box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+		box-shadow: 0px 9px 10px -12px rgba(128, 128, 128, 1);
 		font-size: 1.4rem;
-		margin-bottom: 1rem;
 	}
 
 	&__title-container {
@@ -405,7 +243,7 @@
 	&__price {
 		margin-left: 1rem;
 		padding: 1rem 0 1rem 1rem;
-		border-left: 0.1rem solid colors.$blue;
+		color: colors.$granite;
 	}
 
 	&__price-ending {
