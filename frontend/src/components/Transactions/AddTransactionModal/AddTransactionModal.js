@@ -1,10 +1,7 @@
 import './AddTransactionModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {} from '@fortawesome/free-regular-svg-icons';
-import {
-	faChevronDown,
-	faCircleXmark,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function AddTransactionModal(props) {
 	return (
@@ -20,13 +17,19 @@ export default function AddTransactionModal(props) {
 				</button>
 				<span className='add-transaction__title'>Dodaj transakcję</span>
 				<div className='add-transaction__input-box'>
-					<label className='add-transaction__label'>Nazwa</label>
-					<input className='add-transaction__input'></input>
+					<label for='name' className='add-transaction__label'>
+						Nazwa
+					</label>
+					<input id='name' className='add-transaction__input'></input>
 				</div>
 				<div className='add-transaction__input-box'>
 					<span className='add-transaction__input-currency'>zł</span>
-					<label className='add-transaction__label'>Kwota</label>
-					<input className='add-transaction__input add-transaction__input-amount'></input>
+					<label for='amount' className='add-transaction__label'>
+						Kwota
+					</label>
+					<input
+						id='amount'
+						className='add-transaction__input add-transaction__input-amount'></input>
 				</div>
 				<div className='add-transaction__btns-box'>
 					<button
@@ -39,6 +42,13 @@ export default function AddTransactionModal(props) {
 						type='button'>
 						Przychód
 					</button>
+				</div>
+				<div className='add-transaction__date-box'>
+					<label className='add-transaction__date-label'>Data</label>
+					<input
+						className='add-transaction__date-input'
+						type='date'
+						value='2024-10-21'></input>
 				</div>
 				<button className='add-transaction__list-btn' type='button'>
 					Brak kategorii
@@ -54,7 +64,12 @@ export default function AddTransactionModal(props) {
 						<FontAwesomeIcon icon={faChevronDown} />
 					</span>
 				</button>
-				<button className='add-transaction__add-btn' type='button'>
+				<button
+					className='add-transaction__add-btn'
+					type='button'
+					onClick={() => {
+						props.addModalHandler('addBtn');
+					}}>
 					Dodaj
 				</button>
 			</div>

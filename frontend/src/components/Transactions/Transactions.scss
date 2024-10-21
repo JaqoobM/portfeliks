@@ -6,11 +6,14 @@
 	top: 0;
 	right: 0;
 	left: 0;
-	height: 5rem;
-	display: flex;
-	align-items: center;
 	background-color: colors.$white;
 	box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+
+	&__top-bar {
+		display: flex;
+		align-items: center;
+		height: 5rem;
+	}
 
 	&__input-box {
 		width: 100%;
@@ -119,6 +122,80 @@
 	&__burger-bar3 {
 		transform-origin: bottom left;
 	}
+
+	&__bottom-bar {
+		font-size: 1.4rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 1.2rem 0;
+		height: 3rem;
+		background-color: colors.$white;
+		box-shadow: 0px 12px 10px -16px rgb(117, 117, 117);
+	}
+
+	&__cost-income-box {
+		display: flex;
+		align-items: center;
+	}
+
+	&__bottom-bar-icon {
+		font-size: 1.5rem;
+		margin-right: 0.3rem;
+	}
+
+	&__income-icon {
+		color: colors.$green;
+	}
+
+	&__cost-icon {
+		color: colors.$red;
+		margin-left: 1.4rem;
+		transform: rotate(90deg);
+	}
+
+	&__income {
+		color: colors.$green;
+	}
+
+	&__cost {
+		color: colors.$red;
+	}
+
+	&__balance-box {
+		display: flex;
+		align-items: center;
+		border: 0.1rem solid colors.$green;
+		border-radius: 0.5rem;
+		padding: 0.2rem 0.3rem 0.2rem;
+	}
+
+	&__balance {
+		color: colors.$green;
+	}
+
+	&__balance-icon {
+		font-size: 0.9rem;
+		margin-right: 0.2rem;
+		color: colors.$green;
+	}
+
+	&__balance-currency {
+		color: rgba(0, 187, 19, 0.5);
+	}
+
+	&__currency {
+		font-size: 1rem;
+		margin-left: 0.1rem;
+	}
+
+	&__cost-currency {
+		color: rgba(255, 31, 31, 0.5);
+	}
+
+	&__income-currency {
+		color: rgba(0, 187, 19, 0.5);
+	}
 }
 
 .settings-open {
@@ -182,11 +259,10 @@
 
 // FILTERS
 
-
 // TRANSACTIONS
 .transactions {
 	position: absolute;
-	top: 6rem;
+	top: 8rem;
 	left: 0;
 	right: 0;
 	margin: 0 1rem 0;
@@ -205,11 +281,14 @@
 		align-items: center;
 		min-height: 4.9rem;
 		border-radius: 1.5rem;
-		border-bottom: .1rem solid colors.$granite-light;
+		border-bottom: 0.1rem solid colors.$granite-light;
 		background-color: colors.$white;
-		// box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 		box-shadow: 0px 9px 10px -12px rgba(128, 128, 128, 1);
 		font-size: 1.4rem;
+
+		&:last-child {
+			margin-bottom: 15rem;
+		}
 	}
 
 	&__title-container {
@@ -253,9 +332,23 @@
 	}
 }
 
+.transaction-first-border {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.transaction-between-border {
+	border-radius: 0;
+}
+
+.transaction-last-border {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
 // BACKGROUND
 .page-bg {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
