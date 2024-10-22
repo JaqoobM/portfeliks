@@ -14,90 +14,24 @@ import {
 	faCartShopping,
 	faSquareUpRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 function Transactions() {
 	const [addModalIsOpen, setaddModalIsOpen] = useState(false);
-	const [transactions, setTransactions] = useState([
-		{
-			date: '10.05.2024',
-			name: 'Części do samochodu',
-			price: '49,99',
-			_id: 1,
-		},
-		{
-			date: '21.04.2024',
-			name: 'Lidl',
-			price: '43,25',
-			_id: 2,
-		},
-		{
-			date: '15.04.2024',
-			name: 'Biedronka',
-			price: '22,11',
-			_id: 3,
-		},
-		{
-			date: '15.04.2024',
-			name: 'Telefon',
-			price: '999,99',
-			_id: 4,
-		},
-		{
-			date: '15.04.2024',
-			name: 'Orange',
-			price: '35',
-			_id: 5,
-		},
-		{
-			date: '27.03.2024',
-			name: 'Zakupy',
-			price: '100',
-			_id: 6,
-		},
-		{
-			date: '14.03.2024',
-			name: 'Paliwo',
-			price: '220,77',
-			_id: 7,
-		},
-		{
-			date: '05.03.2024',
-			name: 'Książka',
-			price: '55',
-			_id: 8,
-		},
-		{
-			date: '05.03.2024',
-			name: 'Patelnia',
-			price: '66,34',
-			_id: 9,
-		},
-		{
-			date: '05.03.2024',
-			name: 'Netflix',
-			price: '34,99',
-			_id: 10,
-		},
-		{
-			date: '05.03.2024',
-			name: 'Fryzjer',
-			price: '37',
-			_id: 11,
-		},
-		{
-			date: '23.02.2024',
-			name: 'Buty',
-			price: '250',
-			_id: 12,
-		},
-		{
-			date: '11.02.2024',
-			name: 'Kurtka',
-			price: '180',
-			_id: 13,
-		},
-	]);
+	const [transactions, setFormData] = useState([]);
+
+	useEffect(() => {
+		transactions.sort((a, b) => {
+			const dateA = new Date(a.date);
+			const dateB = new Date(b.date);
+			return dateB - dateA;
+		});
+	}, [transactions]);
+
+	const formDataHandler = (formDataObj) => {
+		setFormData((prevTransactions) => [...prevTransactions, formDataObj]);
+	};
+
 	const settingsBoxRef = useRef(null);
 
 	const settingsMenuHandler = () => {
@@ -117,7 +51,10 @@ function Transactions() {
 	return (
 		<>
 			{addModalIsOpen && (
-				<AddTransactionModal addModalHandler={addModalHandler} />
+				<AddTransactionModal
+					addModalHandler={addModalHandler}
+					formDataHandler={formDataHandler}
+				/>
 			)}
 			<Navigation />
 			{/* TOP BAR */}
@@ -149,7 +86,7 @@ function Transactions() {
 					<div className='top-bar-app__input-box'>
 						<input
 							className='top-bar-app__input'
-							type='text'
+							type='search'
 							placeholder='Szukaj'></input>
 						<span className='top-bar-app__input-icon'>
 							<FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -287,7 +224,7 @@ function Transactions() {
 												{transaction.name}
 											</span>
 											<span className='transactions__price'>
-												{transaction.price}
+												{transaction.amount}
 												<span className='transactions__price-ending'>zł</span>
 											</span>
 										</div>
@@ -309,7 +246,7 @@ function Transactions() {
 											{transaction.name}
 										</span>
 										<span className='transactions__price'>
-											{transaction.price}
+											{transaction.amount}
 											<span className='transactions__price-ending'>zł</span>
 										</span>
 									</div>
@@ -318,25 +255,6 @@ function Transactions() {
 						</React.Fragment>
 					);
 				})}
-				{/* <div className='transactions__container'>
-					<span className='transactions__date'>12.07.2024</span>
-					<div className='transactions__transaction'>
-						<span className='transactions__icon-bg'>
-							<span className='transactions__icon'>
-								<FontAwesomeIcon icon={faCartShopping} />
-							</span>
-						</span>
-
-						<div className='transactions__title-container'>
-							<span className='transactions__title'>
-								Książka - A co ciebie obchodzi co myślą inni?
-							</span>
-							<span className='transactions__price'>
-								5,78<span className='transactions__price-ending'>zł</span>
-							</span>
-						</div>
-					</div>
-				</div> */}
 			</div>
 			<div className='page-bg'></div>
 		</>

@@ -2,11 +2,36 @@ import './AddTransactionModal.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { useState, useRef, useEffect } from 'react';
 
 export default function AddTransactionModal(props) {
+	const date = new Date();
+	const localDatePl = `${date.getFullYear()}-${
+		date.getMonth() + 1
+	}-${date.getDate()}`;
+	const [inputValue, setInputValue] = useState(localDatePl);
+
+	const changeHandler = (e) => {
+		setInputValue(e.target.value);
+	};
+
+	const nameRef = useRef(null);
+	const amountRef = useRef(null);
+	const dateRef = useRef(null);
+
 	return (
 		<>
-			<div className='add-transaction'>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault();
+					props.formDataHandler({
+						name: nameRef.current.value,
+						amount: amountRef.current.value,
+						date: dateRef.current.value,
+					});
+					console.log(amountRef.current.value);
+				}}
+				className='add-transaction'>
 				<button
 					type='button'
 					className='add-transaction__close-btn'
@@ -20,7 +45,10 @@ export default function AddTransactionModal(props) {
 					<label for='name' className='add-transaction__label'>
 						Nazwa
 					</label>
-					<input id='name' className='add-transaction__input'></input>
+					<input
+						ref={nameRef}
+						id='name'
+						className='add-transaction__input'></input>
 				</div>
 				<div className='add-transaction__input-box'>
 					<span className='add-transaction__input-currency'>zł</span>
@@ -28,6 +56,7 @@ export default function AddTransactionModal(props) {
 						Kwota
 					</label>
 					<input
+						ref={amountRef}
 						id='amount'
 						className='add-transaction__input add-transaction__input-amount'></input>
 				</div>
@@ -46,9 +75,13 @@ export default function AddTransactionModal(props) {
 				<div className='add-transaction__date-box'>
 					<label className='add-transaction__date-label'>Data</label>
 					<input
+						ref={dateRef}
 						className='add-transaction__date-input'
 						type='date'
-						value='2024-10-21'></input>
+						value={inputValue}
+						onChange={(e) => {
+							changeHandler(e);
+						}}></input>
 				</div>
 				<button className='add-transaction__list-btn' type='button'>
 					Brak kategorii
@@ -66,13 +99,12 @@ export default function AddTransactionModal(props) {
 				</button>
 				<button
 					className='add-transaction__add-btn'
-					type='button'
 					onClick={() => {
 						props.addModalHandler('addBtn');
 					}}>
 					Dodaj
 				</button>
-			</div>
+			</form>
 		</>
 	);
 }
