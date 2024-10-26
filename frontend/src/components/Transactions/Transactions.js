@@ -2,7 +2,9 @@ import './Transactions.scss';
 import React from 'react';
 import FiltersMobile from './FiltersMobile/FiltersMobile';
 import AddTransactionModal from './AddTransactionModal/AddTransactionModal';
+import CategoryModal from './CategoryModal/CategoryModal';
 import Navigation from '../Navigation/Navigation';
+import TransactionsList from './TransactionsList/TransactionsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -11,14 +13,16 @@ import {
 	faPlus,
 	faGear,
 	faRightFromBracket,
-	faCartShopping,
 	faSquareUpRight,
+	faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState, useEffect } from 'react';
 
 function Transactions() {
-	const [addModalIsOpen, setaddModalIsOpen] = useState(false);
-	const [transactions, setFormData] = useState([]);
+	const [ModalIsOpen, setModalIsOpen] = useState(false);
+	const [transactions, setTransactions] = useState([]);
+	const [addModalIsOpen, setAddModalIsOpen] = useState(false);
+	const [categoryModalIsOpen, setCategoryModalIsOpen] = useState(false);
 
 	useEffect(() => {
 		transactions.sort((a, b) => {
@@ -29,7 +33,11 @@ function Transactions() {
 	}, [transactions]);
 
 	const formDataHandler = (formDataObj) => {
-		setFormData((prevTransactions) => [...prevTransactions, formDataObj]);
+		setTransactions((prevTransactions) => [...prevTransactions, formDataObj]);
+	};
+
+	const categoryModalHandler = () => {
+		setCategoryModalIsOpen(!categoryModalIsOpen);
 	};
 
 	const settingsBoxRef = useRef(null);
@@ -38,29 +46,40 @@ function Transactions() {
 		settingsBoxRef.current.classList.toggle('settings-open');
 	};
 
-	const addModalHandler = (x) => {
-		if (x === 'addBtn') {
+	const modalHandler = (x) => {
+		if (x === 'addModalBtn') {
 			setTimeout(() => {
-				setaddModalIsOpen(!addModalIsOpen);
-			}, 50);
+				setModalIsOpen(false);
+				setAddModalIsOpen(false);
+			}, 100);
+		} else if (x === 'addBtn') {
+			setModalIsOpen(true);
+			setAddModalIsOpen(true);
+		} else if (x === 'editBtn') {
+			setModalIsOpen(true);
 		} else {
-			setaddModalIsOpen(!addModalIsOpen);
+			setModalIsOpen(false);
+			setAddModalIsOpen(false);
 		}
 	};
 
 	return (
 		<>
-			{addModalIsOpen && (
+			{ModalIsOpen && (
 				<AddTransactionModal
-					addModalHandler={addModalHandler}
+					addModalIsOpen={addModalIsOpen}
+					modalHandler={modalHandler}
 					formDataHandler={formDataHandler}
 				/>
 			)}
 			<Navigation />
+			{true && (
+				<CategoryModal categoryModalHandler={categoryModalHandler} />
+			)}
 			{/* TOP BAR */}
 			<div className='top-bar-app'>
 				<div className='top-bar-app__top-bar'>
-					<button
+					<span
 						className='top-bar-app__settings-menu-btn'
 						type='button'
 						onClick={settingsMenuHandler}>
@@ -68,6 +87,15 @@ function Transactions() {
 							<FontAwesomeIcon icon={faEllipsisVertical} />
 						</span>
 						<div ref={settingsBoxRef} className='top-bar-app__settings-box'>
+							<button
+								onClick={categoryModalHandler}
+								className='top-bar-app__settings-btn'>
+								<span className='top-bar-app__settings-icon'>
+									<FontAwesomeIcon icon={faList} />
+								</span>
+								<span className='top-bar-app__settings-text'>Kategorie</span>
+							</button>
+							<span className='top-bar-app__settings-line'></span>
 							<button className='top-bar-app__settings-btn'>
 								<span className='top-bar-app__settings-icon'>
 									<FontAwesomeIcon icon={faGear} />
@@ -82,7 +110,7 @@ function Transactions() {
 								<span className='top-bar-app__settings-text'>Wyloguj</span>
 							</button>
 						</div>
-					</button>
+					</span>
 					<div className='top-bar-app__input-box'>
 						<input
 							className='top-bar-app__input'
@@ -144,7 +172,9 @@ function Transactions() {
 				<button
 					className='transaction-btns__btn transaction-btns__add-btn'
 					type='button'
-					onClick={addModalHandler}>
+					onClick={() => {
+						modalHandler('addBtn');
+					}}>
 					<div className='transaction-btns__text-box'>
 						<span className='transaction-btns__text'>Dodaj</span>
 						<span className='transaction-btns__text'>transakcję</span>
@@ -156,106 +186,10 @@ function Transactions() {
 			</div>
 			<FiltersMobile />
 			{/* TRANSACTIONS */}
-			<div className='transactions'>
-				{transactions.map((transaction) => {
-					let isDifferent;
-					let isFirst;
-					let isBetween;
-					let isLast;
-
-					const index = transactions.findIndex((el) => {
-						return el === transaction;
-					});
-
-					if (
-						transactions[index - 1]?.date !== transactions[index]?.date &&
-						transactions[index]?.date === transactions[index + 1]?.date
-					) {
-						isDifferent = true;
-						isFirst = true;
-					} else if (
-						transactions[index - 1]?.date !== transactions[index]?.date
-					) {
-						isDifferent = true;
-					} else if (
-						transactions[index - 1]?.date === transactions[index + 1]?.date
-					) {
-						isBetween = true;
-					} else if (
-						transactions[index]?.date !== transactions[index + 1]?.date
-					) {
-						isLast = true;
-					}
-
-					// if (transactions[index]?.date !== transactions[index - 1]?.date) {
-					// 	isDifferent = true;
-					// }
-
-					// if (transactions[index]?.date === transactions[index + 1]?.date) {
-					// 	isFirst = true;
-					// }
-
-					// if (transactions[index - 1]?.date === transactions[index + 1]?.date) {
-					// 	isBetween = true;
-					// }
-
-					// if (transactions[index]?.date !== transactions[index + 1]?.date) {
-					// 	isLast = true;
-					// }
-
-					return (
-						<React.Fragment key={transaction._id}>
-							{transaction === transactions[0] || isDifferent ? (
-								<>
-									<span className='transactions__date'>{transaction.date}</span>
-
-									<div
-										className={`transactions__transaction ${
-											isFirst ? 'transaction-first-border' : ''
-										}`}>
-										<span className='transactions__icon-bg'>
-											<span className='transactions__icon'>
-												<FontAwesomeIcon icon={faCartShopping} />
-											</span>
-										</span>
-
-										<div className='transactions__title-container'>
-											<span className='transactions__title'>
-												{transaction.name}
-											</span>
-											<span className='transactions__price'>
-												{transaction.amount}
-												<span className='transactions__price-ending'>zł</span>
-											</span>
-										</div>
-									</div>
-								</>
-							) : (
-								<div
-									className={`transactions__transaction ${
-										isBetween ? 'transaction-between-border' : ''
-									} ${isLast ? 'transaction-last-border' : ''}`}>
-									<span className='transactions__icon-bg'>
-										<span className='transactions__icon'>
-											<FontAwesomeIcon icon={faCartShopping} />
-										</span>
-									</span>
-
-									<div className='transactions__title-container'>
-										<span className='transactions__title'>
-											{transaction.name}
-										</span>
-										<span className='transactions__price'>
-											{transaction.amount}
-											<span className='transactions__price-ending'>zł</span>
-										</span>
-									</div>
-								</div>
-							)}
-						</React.Fragment>
-					);
-				})}
-			</div>
+			<TransactionsList
+				transactions={transactions}
+				modalHandler={modalHandler}
+			/>
 			<div className='page-bg'></div>
 		</>
 	);

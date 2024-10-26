@@ -62,7 +62,6 @@
 
 		&:focus {
 			outline: 0.2rem solid colors.$blue;
-			// box-shadow: 0px 0px 10px -4px colors.$blue;
 		}
 	}
 
@@ -119,6 +118,10 @@
 		padding: 0 1rem 0;
 		background: none;
 		font-size: 1.3rem;
+
+		&:focus {
+			outline: 0.2rem solid colors.$blue;
+		}
 	}
 
 	&__date-label {
@@ -167,15 +170,22 @@
 		border: none;
 		background-color: colors.$blue;
 		border-radius: 1.5rem;
-		margin-top: 1.5rem;
+		margin-top: 2.5rem;
 		height: 5rem;
 		color: colors.$white;
 		width: 90%;
 		font-size: 1.5rem;
-		// transition: background-color 1s;
 
 		&:active {
 			background-color: rgb(36, 147, 175);
+		}
+	}
+
+	&__delete-btn {
+		background-color: colors.$red;
+		margin-top: 1.5rem;
+		&:active {
+			background-color: rgb(240, 31, 31);
 		}
 	}
 }
