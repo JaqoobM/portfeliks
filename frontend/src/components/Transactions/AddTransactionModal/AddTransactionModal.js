@@ -102,13 +102,13 @@ export default function AddTransactionModal(props) {
 							<FontAwesomeIcon icon={faChevronDown} />
 						</span>
 					</button>
-					{/* <button className='add-transaction__list-btn' type='button'>
-						Brak ikony
-						<span className='add-transaction__list-btn-span'>Ikona</span>
+					<button className='add-transaction__list-btn' type='button'>
+						Domyślny
+						<span className='add-transaction__list-btn-span'>Portfel</span>
 						<span className='add-transaction__list-btn-chevron'>
 							<FontAwesomeIcon icon={faChevronDown} />
 						</span>
-					</button> */}
+					</button>
 					<button
 						className='add-transaction__add-btn'
 						onClick={() => {
@@ -197,13 +197,13 @@ export default function AddTransactionModal(props) {
 							<FontAwesomeIcon icon={faChevronDown} />
 						</span>
 					</button>
-					{/* <button className='add-transaction__list-btn' type='button'>
-						Brak ikony
-						<span className='add-transaction__list-btn-span'>Ikona</span>
+					<button className='add-transaction__list-btn' type='button'>
+						Domyślny
+						<span className='add-transaction__list-btn-span'>Portfel</span>
 						<span className='add-transaction__list-btn-chevron'>
 							<FontAwesomeIcon icon={faChevronDown} />
 						</span>
-					</button> */}
+					</button>
 					<button
 						className='add-transaction__add-btn'
 						onClick={() => {

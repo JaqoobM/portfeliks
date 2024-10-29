@@ -133,7 +133,6 @@
 		padding: 1.5rem;
 		margin-top: 3rem;
 		border: 0.1rem solid colors.$granite;
-          // background-color: colors.$bg-blue;
 		border-radius: 1.2rem;
 		width: 100%;
 		height: 100%;
@@ -141,24 +140,91 @@
 	}
 
 	&__category-box {
-          // box-shadow: 0px 9px 10px -12px rgb(128, 128, 128);
-          margin-top: 1rem;
+		// box-shadow: 0px 9px 10px -12px rgb(128, 128, 128);
+		margin-top: 1rem;
 		padding: 0.6rem;
 		display: flex;
 		align-items: center;
 		width: 100%;
-		border: 0.1rem solid colors.$granite2;
 		border-radius: 1.2rem;
 		height: 4.9rem;
-          background-color: colors.$white;
+		background-color: rgb(220, 248, 255);
 
-          &:first-child {
-               margin: 0;
-          }
+		&:first-child {
+			margin: 0;
+		}
 	}
 
 	&__category-name {
-          margin-left: 1rem;
+		margin-left: 1rem;
 		font-size: 1.4rem;
 	}
+
+	// Edit
+	&__btn-close-icon-edit {
+		color: colors.$orange;
+	}
+
+	&__title-edit {
+		color: colors.$orange;
+	}
+
+	&__btn-delete {
+		background-color: colors.$red;
+		margin-right: 1.5rem;
+
+		&:active {
+			background-color: rgb(243, 18, 18);
+		}
+	}
+
+	&__btn-save {
+		background-color: colors.$orange;
+
+		&:active {
+			background-color: rgb(241, 129, 0);
+			background-color: colors.$orange;
+			box-shadow: inset 0 0 1rem 0 rgb(201, 107, 0);
+		}
+	}
+
+	&__input-edit {
+		&:focus {
+			outline: 0.2rem solid colors.$orange;
+		}
+	}
+
+	&__create-panel {
+		width: 100%;
+		// opacity: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		// transition: opacity 0.3s;
+	}
+
+	&__edit-panel {
+		position: absolute;
+		top: 0;
+		padding: 0 1.8rem 0;
+		background-color: white;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		transform: translateY(-100%);
+		transition: transform .3s;
+	}
+}
+
+.edit-panel-activated {
+	transform: translateY(0);
+}
+
+.create-panel-activated {
+	opacity: 1;
+}
+
+.no-transition {
+	transition: none;
 }

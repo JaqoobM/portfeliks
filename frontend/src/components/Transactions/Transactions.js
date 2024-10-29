@@ -73,8 +73,11 @@ function Transactions() {
 				/>
 			)}
 			<Navigation />
-			{true && (
-				<CategoryModal categoryModalHandler={categoryModalHandler} />
+			{categoryModalIsOpen && (
+				<CategoryModal
+					categoryModalHandler={categoryModalHandler}
+					categoryModalIsOpen={categoryModalIsOpen}
+				/>
 			)}
 			{/* TOP BAR */}
 			<div className='top-bar-app'>
