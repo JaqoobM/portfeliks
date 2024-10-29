@@ -15,6 +15,7 @@ import {
 	faRightFromBracket,
 	faSquareUpRight,
 	faList,
+	faCartShopping
 } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState, useEffect } from 'react';
 
@@ -23,6 +24,7 @@ function Transactions() {
 	const [transactions, setTransactions] = useState([]);
 	const [addModalIsOpen, setAddModalIsOpen] = useState(false);
 	const [categoryModalIsOpen, setCategoryModalIsOpen] = useState(false);
+	const [categoryList, setCategoryList] = useState([]);
 
 	useEffect(() => {
 		transactions.sort((a, b) => {
@@ -34,6 +36,10 @@ function Transactions() {
 
 	const formDataHandler = (formDataObj) => {
 		setTransactions((prevTransactions) => [...prevTransactions, formDataObj]);
+	};
+
+	const categoryHandler = (newCategory) => {
+		setCategoryList((prevCategoryList) => [...prevCategoryList, newCategory]);
 	};
 
 	const categoryModalHandler = () => {
@@ -77,6 +83,7 @@ function Transactions() {
 				<CategoryModal
 					categoryModalHandler={categoryModalHandler}
 					categoryModalIsOpen={categoryModalIsOpen}
+					categoryList={categoryList}
 				/>
 			)}
 			{/* TOP BAR */}
