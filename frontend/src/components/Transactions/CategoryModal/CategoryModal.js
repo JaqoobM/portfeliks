@@ -57,16 +57,16 @@ export default function CategoryModal(props) {
 		}
 	};
 
-	const categoryIconBtnHandler = (e) => {
-		e.target.closest('button').classList.toggle('category-btn-border');
-		categoryIconListRef.current.classList.toggle('category-icon-list-apper');
+	// const categoryIconBtnHandler = (e) => {
+	// 	e.target.closest('button').classList.toggle('category-btn-border');
+	// 	categoryIconListRef.current.classList.toggle('category-icon-list-apper');
 
-		const iconKey = e.target.closest('li').getAttribute('iconKey');
-		const iconObj = categoryIconList.find((el) => {
-			return el.key === iconKey;
-		});
-		setCategoryIcon(iconObj.name);
-	};
+	// 	const iconKey = e.target.closest('li').getAttribute('iconKey');
+	// 	const iconObj = categoryIconList.find((el) => {
+	// 		return el.key === iconKey;
+	// 	});
+	// 	setCategoryIcon(iconObj.name);
+	// };
 
 	return (
 		<>
@@ -74,7 +74,7 @@ export default function CategoryModal(props) {
 				{/* CREATE MODAL */}
 				<form
 					onSubmit={(e) => {
-						e.preventDefault();
+						// e.preventDefault();
 						props.categoryHandler({
 							name: createCategoryNameRef.current.value,
 						});
@@ -100,9 +100,9 @@ export default function CategoryModal(props) {
 					{/* BOTTOM BOX */}
 					<div className='category-modal__bottom-box'>
 						<button
-							onClick={(e) => {
-								categoryIconBtnHandler(e);
-							}}
+							// onClick={(e) => {
+							// 	categoryIconBtnHandler(e);
+							// }}
 							type='button'
 							className='category-modal__icon-box'>
 							<div className='category-modal__btn-add-icon'>
@@ -118,13 +118,13 @@ export default function CategoryModal(props) {
 							</div>
 
 							<span className='category-modal__icon-span'>Ikona</span>
-							<ul
+							<selcect
 								ref={categoryIconListRef}
 								className='category-modal__icons-list'>
 								{categoryIconList.map((icon) => {
 									return (
 										<React.Fragment key={icon.key}>
-											<li
+											<option
 												iconKey={icon.key}
 												className='category-modal__icons-list-icon'>
 												<div className='category-modal__btn-icon-box'>
@@ -132,11 +132,11 @@ export default function CategoryModal(props) {
 														<FontAwesomeIcon icon={icon.name} />
 													</span>
 												</div>
-											</li>
+											</option>
 										</React.Fragment>
 									);
 								})}
-							</ul>
+							</selcect>
 						</button>
 
 						<button className='category-modal__btn'>Dodaj</button>
@@ -168,7 +168,7 @@ export default function CategoryModal(props) {
 					<div className='category-modal__bottom-box'>
 						<button
 							type='button'
-							onClick={categoryIconBtnHandler}
+							// onClick={categoryIconBtnHandler}
 							className='category-modal__icon-box'>
 							<div
 								// ref={categoryBtnIconRef}

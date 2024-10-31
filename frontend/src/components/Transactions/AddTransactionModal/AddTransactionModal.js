@@ -13,7 +13,6 @@ export default function AddTransactionModal(props) {
 
 	const changeHandler = (e) => {
 		setInputValue(e.target.value);
-		console.log(props.addModalIsOpen);
 	};
 
 	const nameRef = useRef(null);
@@ -27,10 +26,8 @@ export default function AddTransactionModal(props) {
 				<form
 					onSubmit={(e) => {
 						e.preventDefault();
-
 						const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 						let result = '';
-
 						for (let i = 0; i < 24; i++) {
 							const index = Math.floor(Math.random() * characters.length);
 							result += characters[index];

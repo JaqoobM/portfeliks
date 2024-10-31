@@ -15,9 +15,10 @@ import {
 	faRightFromBracket,
 	faSquareUpRight,
 	faList,
-	faCartShopping
+	faCartShopping,
 } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 
 function Transactions() {
 	const [ModalIsOpen, setModalIsOpen] = useState(false);
@@ -34,8 +35,28 @@ function Transactions() {
 		});
 	}, [transactions]);
 
-	const formDataHandler = (formDataObj) => {
-		setTransactions((prevTransactions) => [...prevTransactions, formDataObj]);
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			await axios.get('/transakcje');
+	// 		} catch (e) {
+	// 			console.log('Nie udało się pobrać');
+	// 		}
+	// 	};
+	// });
+
+	const formDataHandler = async (formDataObj) => {
+		try {
+			await axios.post('http://localhost:3000/api/transakcje', {
+				name: formDataObj.name,
+				amount: formDataObj.amount,
+				date: formDataObj.date,
+			});
+
+			setTransactions((prevTransactions) => [...prevTransactions, formDataObj]);
+		} catch (e) {
+			console.log('Nie udało się wysłać na serwer!', e);
+		}
 	};
 
 	const categoryHandler = (newCategory) => {
