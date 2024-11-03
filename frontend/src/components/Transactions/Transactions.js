@@ -26,6 +26,15 @@ function Transactions() {
 	const [addModalIsOpen, setAddModalIsOpen] = useState(false);
 	const [categoryModalIsOpen, setCategoryModalIsOpen] = useState(false);
 	const [categoryList, setCategoryList] = useState([]);
+	const [editedTransaction, setEditedTransaction] = useState([]);
+
+	const editTransactionHandler = (_id) => {
+		const transaction = transactions.find((transaction) => {
+			return transaction._id === _id;
+		});
+
+		setEditedTransaction(transaction);
+	};
 
 	useEffect(() => {
 		transactions.sort((a, b) => {
@@ -35,27 +44,56 @@ function Transactions() {
 		});
 	}, [transactions]);
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			await axios.get('/transakcje');
-	// 		} catch (e) {
-	// 			console.log('Nie udało się pobrać');
-	// 		}
-	// 	};
-	// });
+	useEffect(() => {
+		const fetchTransactions = async () => {
+			try {
+				const transactions = await axios.get(
+					'http://localhost:3000/api/transakcje'
+				);
+				setTransactions(transactions.data);
+			} catch (e) {
+				console.log('Nie udało się pobrać');
+			}
+		};
 
-	const formDataHandler = async (formDataObj) => {
+		fetchTransactions();
+	}, []);
+
+	const formDataHandler = async (newTransaction) => {
 		try {
 			await axios.post('http://localhost:3000/api/transakcje', {
-				name: formDataObj.name,
-				amount: formDataObj.amount,
-				date: formDataObj.date,
+				name: newTransaction.name,
+				amount: newTransaction.amount,
+				date: newTransaction.date,
+				customId: newTransaction.customId
 			});
 
-			setTransactions((prevTransactions) => [...prevTransactions, formDataObj]);
+			setTransactions((prevTransactions) => [
+				...prevTransactions,
+				newTransaction,
+			]);
+			console.log(transactions);
 		} catch (e) {
 			console.log('Nie udało się wysłać na serwer!', e);
+		}
+	};
+
+	const editTransactionData = async (transaction) => {
+		try {
+			await axios.put('http://localhost:3000/api/transakcje', {
+				name: transaction.name,
+				amount: transaction.amount,
+				date: transaction.date,
+				_id: transaction._id,
+			});
+			
+			const transactionIndex = transactions.indexOf(editedTransaction);
+			const newTransactions = [...transactions];
+			newTransactions[transactionIndex] = newTransactions;
+			
+			setTransactions(newTransactions);
+		} catch {
+			console.log('Nie edytowano');
 		}
 	};
 
@@ -94,6 +132,8 @@ function Transactions() {
 		<>
 			{ModalIsOpen && (
 				<AddTransactionModal
+					editTransactionData={editTransactionData}
+					editedTransaction={editedTransaction}
 					addModalIsOpen={addModalIsOpen}
 					modalHandler={modalHandler}
 					formDataHandler={formDataHandler}
@@ -218,6 +258,7 @@ function Transactions() {
 			<FiltersMobile />
 			{/* TRANSACTIONS */}
 			<TransactionsList
+				editTransactionHandler={editTransactionHandler}
 				transactions={transactions}
 				modalHandler={modalHandler}
 			/>

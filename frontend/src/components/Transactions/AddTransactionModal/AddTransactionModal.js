@@ -5,19 +5,70 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { useState, useRef, useEffect } from 'react';
 
 export default function AddTransactionModal(props) {
+	const numbersArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 	const date = new Date();
-	const localDatePl = `${date.getFullYear()}-${
-		date.getMonth() + 1
-	}-${date.getDate()}`;
-	const [inputValue, setInputValue] = useState(localDatePl);
+	const year = date.getFullYear();
+	const month = numbersArr.includes(date.getMonth() + 1)
+		? `0${date.getMonth() + 1}`
+		: date.getMonth() + 1;
+	const day = numbersArr.includes(date.getDate())
+		? `0${date.getDate()}`
+		: date.getDate();
 
-	const changeHandler = (e) => {
-		setInputValue(e.target.value);
+	const actualDate = `${year}-${month}-${day}`;
+
+	const [editNameValue, setEditNameValue] = useState(
+		props.editedTransaction.name
+	);
+	const [editAmountValue, setEditAmountValue] = useState(
+		props.editedTransaction.amount
+	);
+	const [editDateValue, setEditDateValue] = useState(
+		props.editedTransaction.date?.split('T')[0]
+	);
+
+	const changeHandler = (e, element) => {
+		if (element === 'name') {
+			setEditNameValue(e.target.value);
+		} else if (element === 'amount') {
+			setEditAmountValue(e.target.value);
+		} else {
+			setEditDateValue(e.target.value);
+		}
 	};
 
-	const nameRef = useRef(null);
-	const amountRef = useRef(null);
-	const dateRef = useRef(null);
+	const addNameRef = useRef(null);
+	const addAmountRef = useRef(null);
+	const addDateRef = useRef(null);
+
+	const submitAddHandler = (e) => {
+		e.preventDefault();
+		const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		let result = '';
+		for (let i = 0; i < 24; i++) {
+			const index = Math.floor(Math.random() * characters.length);
+			result += characters[index];
+		}
+
+		props.formDataHandler({
+			name: addNameRef.current.value,
+			amount: addAmountRef.current.value,
+			date: addDateRef.current.value,
+			customId: result,
+		});
+	};
+
+	const submitEditHandler = (e) => {
+		e.preventDefault();
+
+		props.editTransactionData({
+			_id: props.editedTransaction._id,
+			name: editNameValue,
+			amount: editAmountValue,
+			date: editDateValue,
+			customId: props.editedTransaction.customId,
+		});
+	};
 
 	return (
 		<>
@@ -25,20 +76,7 @@ export default function AddTransactionModal(props) {
 				// ADD MODAL
 				<form
 					onSubmit={(e) => {
-						e.preventDefault();
-						const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-						let result = '';
-						for (let i = 0; i < 24; i++) {
-							const index = Math.floor(Math.random() * characters.length);
-							result += characters[index];
-						}
-
-						props.formDataHandler({
-							name: nameRef.current.value,
-							amount: amountRef.current.value,
-							date: dateRef.current.value,
-							_id: result,
-						});
+						submitAddHandler(e);
 					}}
 					className='add-transaction'>
 					<button
@@ -51,21 +89,21 @@ export default function AddTransactionModal(props) {
 					</button>
 					<span className='add-transaction__title'>Dodaj transakcję</span>
 					<div className='add-transaction__input-box'>
-						<label for='name' className='add-transaction__label'>
+						<label htmlFor='name' className='add-transaction__label'>
 							Nazwa
 						</label>
 						<input
-							ref={nameRef}
+							ref={addNameRef}
 							id='name'
 							className='add-transaction__input'></input>
 					</div>
 					<div className='add-transaction__input-box'>
 						<span className='add-transaction__input-currency'>zł</span>
-						<label for='amount' className='add-transaction__label'>
+						<label htmlFor='amount' className='add-transaction__label'>
 							Kwota
 						</label>
 						<input
-							ref={amountRef}
+							ref={addAmountRef}
 							id='amount'
 							className='add-transaction__input add-transaction__input-amount'></input>
 					</div>
@@ -84,10 +122,10 @@ export default function AddTransactionModal(props) {
 					<div className='add-transaction__date-box'>
 						<label className='add-transaction__date-label'>Data</label>
 						<input
-							ref={dateRef}
+							ref={addDateRef}
 							className='add-transaction__date-input'
 							type='date'
-							value={inputValue}
+							value={actualDate}
 							onChange={(e) => {
 								changeHandler(e);
 							}}></input>
@@ -118,22 +156,7 @@ export default function AddTransactionModal(props) {
 				// EDIT MODAL
 				<form
 					onSubmit={(e) => {
-						e.preventDefault();
-
-						const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-						let result = '';
-
-						for (let i = 0; i < 24; i++) {
-							const index = Math.floor(Math.random() * characters.length);
-							result += characters[index];
-						}
-
-						props.formDataHandler({
-							name: nameRef.current.value,
-							amount: amountRef.current.value,
-							date: dateRef.current.value,
-							_id: result,
-						});
+						submitEditHandler(e);
 					}}
 					className='add-transaction'>
 					<button
@@ -146,23 +169,29 @@ export default function AddTransactionModal(props) {
 					</button>
 					<span className='add-transaction__title'>Edytuj transakcję</span>
 					<div className='add-transaction__input-box'>
-						<label for='name' className='add-transaction__label'>
+						<label htmlFor='name' className='add-transaction__label'>
 							Nazwa
 						</label>
 						<input
-							ref={nameRef}
+							onChange={(e) => {
+								changeHandler(e, 'name');
+							}}
 							id='name'
-							className='add-transaction__input'></input>
+							className='add-transaction__input'
+							value={editNameValue}></input>
 					</div>
 					<div className='add-transaction__input-box'>
 						<span className='add-transaction__input-currency'>zł</span>
-						<label for='amount' className='add-transaction__label'>
+						<label htmlFor='amount' className='add-transaction__label'>
 							Kwota
 						</label>
 						<input
-							ref={amountRef}
+							onChange={(e) => {
+								changeHandler(e, 'amount');
+							}}
 							id='amount'
-							className='add-transaction__input add-transaction__input-amount'></input>
+							className='add-transaction__input add-transaction__input-amount'
+							value={editAmountValue}></input>
 					</div>
 					<div className='add-transaction__btns-box'>
 						<button
@@ -179,10 +208,9 @@ export default function AddTransactionModal(props) {
 					<div className='add-transaction__date-box'>
 						<label className='add-transaction__date-label'>Data</label>
 						<input
-							ref={dateRef}
 							className='add-transaction__date-input'
 							type='date'
-							value={inputValue}
+							value={editDateValue}
 							onChange={(e) => {
 								changeHandler(e);
 							}}></input>

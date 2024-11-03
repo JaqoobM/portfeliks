@@ -56,14 +56,21 @@ export default function TransactionsList(props) {
 				// }
 
 				return (
-					<React.Fragment key={transaction._id}>
+					<React.Fragment key={transaction._id || transaction.customId}>
 						{transaction === transactions[0] || isDifferent ? (
 							<>
-								<span className='transactions__date'>{transaction.date}</span>
+								<span className='transactions__date'>
+									{transaction.date
+										?.split('T')[0]
+										.split('-')
+										.reverse()
+										.join('.')}
+								</span>
 
 								<div
 									onClick={() => {
 										props.modalHandler('editBtn');
+										props.editTransactionHandler(transaction._id);
 									}}
 									className={`transactions__transaction ${
 										isFirst ? 'transaction-first-border' : ''
@@ -89,6 +96,7 @@ export default function TransactionsList(props) {
 							<div
 								onClick={() => {
 									props.modalHandler('editBtn');
+									props.editTransactionHandler(transaction._id);
 								}}
 								className={`transactions__transaction ${
 									isBetween ? 'transaction-between-border' : ''
