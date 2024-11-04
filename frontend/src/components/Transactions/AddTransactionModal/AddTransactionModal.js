@@ -24,7 +24,7 @@ export default function AddTransactionModal(props) {
 		props.editedTransaction.amount
 	);
 	const [editDateValue, setEditDateValue] = useState(
-		props.editedTransaction.date?.split('T')[0]
+		props.editedTransaction.date.split('.').reverse().join('-')
 	);
 
 	const [addDateValue, setAddDateValue] = useState(actualDate);
@@ -45,8 +45,7 @@ export default function AddTransactionModal(props) {
 	const addAmountRef = useRef(null);
 	const addDateRef = useRef(null);
 
-	const submitAddHandler = (e) => {
-		e.preventDefault();
+	const addHandler = (e) => {
 		const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 		let result = '';
 		for (let i = 0; i < 24; i++) {
@@ -62,9 +61,7 @@ export default function AddTransactionModal(props) {
 		});
 	};
 
-	const submitEditHandler = (e) => {
-		e.preventDefault();
-
+	const editHandler = () => {
 		props.editTransactionData({
 			_id: props.editedTransaction._id,
 			name: editNameValue,
@@ -78,11 +75,7 @@ export default function AddTransactionModal(props) {
 		<>
 			{props.addModalIsOpen ? (
 				// ADD MODAL
-				<form
-					onSubmit={(e) => {
-						submitAddHandler(e);
-					}}
-					className='add-transaction'>
+				<div className='add-transaction'>
 					<button
 						type='button'
 						className='add-transaction__close-btn'
@@ -152,17 +145,14 @@ export default function AddTransactionModal(props) {
 						className='add-transaction__add-btn'
 						onClick={() => {
 							props.modalHandler('addModalBtn');
+							addHandler();
 						}}>
 						Dodaj
 					</button>
-				</form>
+				</div>
 			) : (
 				// EDIT MODAL
-				<form
-					onSubmit={(e) => {
-						submitEditHandler(e);
-					}}
-					className='add-transaction'>
+				<div className='add-transaction'>
 					<button
 						type='button'
 						className='add-transaction__close-btn'
@@ -237,6 +227,7 @@ export default function AddTransactionModal(props) {
 						className='add-transaction__add-btn'
 						onClick={() => {
 							props.modalHandler('addModalBtn');
+							editHandler();
 						}}>
 						Zapisz
 					</button>
@@ -244,10 +235,11 @@ export default function AddTransactionModal(props) {
 						className='add-transaction__add-btn add-transaction__delete-btn'
 						onClick={() => {
 							props.modalHandler('addModalBtn');
+							props.deleteTransactionData();
 						}}>
 						Usuń
 					</button>
-				</form>
+				</div>
 			)}
 		</>
 	);

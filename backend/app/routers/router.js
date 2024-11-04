@@ -7,4 +7,8 @@ router
 	.post(transactionControler.createTransaction)
 	.get(transactionControler.showTransactions)
 	.put(transactionControler.editTransaction);
+	
+router
+	.route('/api/transakcje/:id')
+	.delete(transactionControler.deleteTransaction);
 export default router;

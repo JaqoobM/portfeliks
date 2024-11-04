@@ -31,27 +31,37 @@ function Transactions() {
 	const [editedTransaction, setEditedTransaction] = useState([]);
 
 	useEffect(() => {
+		const fetchTransactions = async () => {
+			try {
+				const transactions = await axios.get(
+					'http://localhost:3000/api/transakcje'
+				);
+
+				const transactionData = [...transactions.data]
+
+				transactionData.sort((a, b) => {
+					const dateA = new Date(a.date);
+					const dateB = new Date(b.date);
+					return dateB - dateA;
+				});
+				
+				setTransactions(transactionData);
+			} catch (e) {
+				console.log('Nie udało się pobrać');
+			}
+		};
+		
+
+		fetchTransactions();
+	}, []);
+
+	useEffect(() => {
 		transactions.sort((a, b) => {
 			const dateA = new Date(a.date);
 			const dateB = new Date(b.date);
 			return dateB - dateA;
 		});
 	}, [transactions]);
-
-	useEffect(() => {
-		const fetchTransactions = async () => {
-			try {
-				const transactions = await axios.get(
-					'http://localhost:3000/api/transakcje'
-				);
-				setTransactions(transactions.data);
-			} catch (e) {
-				console.log('Nie udało się pobrać');
-			}
-		};
-
-		fetchTransactions();
-	}, []);
 
 	const addTransactionData = async (newTransaction) => {
 		try {
@@ -103,6 +113,25 @@ function Transactions() {
 		setEditedTransaction(transaction);
 	};
 
+	const deleteTransactionData = async () => {
+		try {
+			await axios.delete(
+				'http://localhost:3000/api/transakcje/' +
+					(editedTransaction._id || editedTransaction.customId)
+			);
+
+			const newTransactions = transactions.filter((transaction) => {
+				return editedTransaction._id
+					? transaction._id !== editedTransaction._id
+					: transaction.customId !== editedTransaction.customId;
+			});
+
+			setTransactions(newTransactions);
+		} catch {
+			console.log('Nie usunięto transakcji');
+		}
+	};
+
 	const categoryHandler = (newCategory) => {
 		setCategoryList((prevCategoryList) => [...prevCategoryList, newCategory]);
 	};
@@ -136,6 +165,7 @@ function Transactions() {
 		<>
 			{ModalIsOpen && (
 				<AddTransactionModal
+					deleteTransactionData={deleteTransactionData}
 					editTransactionData={editTransactionData}
 					editedTransaction={editedTransaction}
 					addModalIsOpen={addModalIsOpen}

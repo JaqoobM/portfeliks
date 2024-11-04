@@ -1,4 +1,5 @@
 import Transaction from '../db/models/transaction.js';
+import mongoose from 'mongoose';
 
 class TransactionControler {
 	async createTransaction(req, res) {
@@ -38,6 +39,21 @@ class TransactionControler {
 			res.status(200).send('Zapisano edycje');
 		} catch (e) {
 			console.log('Nie zapisano edycji');
+		}
+	}
+
+	async deleteTransaction(req, res) {
+		const { id } = req.params;
+
+		try {
+			if (typeof id === 'string') {
+				await Transaction.deleteOne({ customId: id });
+			} else {
+				await Transaction.deleteOne({ _id: id });
+			}
+			res.status(200).send('Usunięto transakcję');
+		} catch (e) {
+			console.log(e, 'Nie usunięto transakcji');
 		}
 	}
 }
