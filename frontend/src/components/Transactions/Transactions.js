@@ -21,20 +21,14 @@ import { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 
 function Transactions() {
+	const settingsBoxRef = useRef(null);
+
 	const [ModalIsOpen, setModalIsOpen] = useState(false);
 	const [transactions, setTransactions] = useState([]);
 	const [addModalIsOpen, setAddModalIsOpen] = useState(false);
 	const [categoryModalIsOpen, setCategoryModalIsOpen] = useState(false);
 	const [categoryList, setCategoryList] = useState([]);
 	const [editedTransaction, setEditedTransaction] = useState([]);
-
-	const editTransactionHandler = (_id) => {
-		const transaction = transactions.find((transaction) => {
-			return transaction._id === _id;
-		});
-
-		setEditedTransaction(transaction);
-	};
 
 	useEffect(() => {
 		transactions.sort((a, b) => {
@@ -59,20 +53,19 @@ function Transactions() {
 		fetchTransactions();
 	}, []);
 
-	const formDataHandler = async (newTransaction) => {
+	const addTransactionData = async (newTransaction) => {
 		try {
 			await axios.post('http://localhost:3000/api/transakcje', {
 				name: newTransaction.name,
 				amount: newTransaction.amount,
 				date: newTransaction.date,
-				customId: newTransaction.customId
+				customId: newTransaction.customId,
 			});
 
 			setTransactions((prevTransactions) => [
 				...prevTransactions,
 				newTransaction,
 			]);
-			console.log(transactions);
 		} catch (e) {
 			console.log('Nie udało się wysłać na serwer!', e);
 		}
@@ -81,20 +74,33 @@ function Transactions() {
 	const editTransactionData = async (transaction) => {
 		try {
 			await axios.put('http://localhost:3000/api/transakcje', {
+				_id: transaction._id,
 				name: transaction.name,
 				amount: transaction.amount,
 				date: transaction.date,
-				_id: transaction._id,
+				customId: transaction.customId,
 			});
-			
+
 			const transactionIndex = transactions.indexOf(editedTransaction);
 			const newTransactions = [...transactions];
-			newTransactions[transactionIndex] = newTransactions;
-			
+			newTransactions[transactionIndex] = transaction;
+
 			setTransactions(newTransactions);
 		} catch {
 			console.log('Nie edytowano');
 		}
+	};
+
+	const editTransactionHandler = (_id, customId) => {
+		const transaction = transactions.find((transaction) => {
+			if (_id) {
+				return transaction._id === _id;
+			} else {
+				return transaction.customId === customId;
+			}
+		});
+
+		setEditedTransaction(transaction);
 	};
 
 	const categoryHandler = (newCategory) => {
@@ -104,8 +110,6 @@ function Transactions() {
 	const categoryModalHandler = () => {
 		setCategoryModalIsOpen(!categoryModalIsOpen);
 	};
-
-	const settingsBoxRef = useRef(null);
 
 	const settingsMenuHandler = () => {
 		settingsBoxRef.current.classList.toggle('settings-open');
@@ -136,7 +140,7 @@ function Transactions() {
 					editedTransaction={editedTransaction}
 					addModalIsOpen={addModalIsOpen}
 					modalHandler={modalHandler}
-					formDataHandler={formDataHandler}
+					addTransactionData={addTransactionData}
 				/>
 			)}
 			<Navigation />

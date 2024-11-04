@@ -70,7 +70,10 @@ export default function TransactionsList(props) {
 								<div
 									onClick={() => {
 										props.modalHandler('editBtn');
-										props.editTransactionHandler(transaction._id);
+										props.editTransactionHandler(
+											transaction._id,
+											transaction.customId
+										);
 									}}
 									className={`transactions__transaction ${
 										isFirst ? 'transaction-first-border' : ''
@@ -96,7 +99,10 @@ export default function TransactionsList(props) {
 							<div
 								onClick={() => {
 									props.modalHandler('editBtn');
-									props.editTransactionHandler(transaction._id);
+									props.editTransactionHandler(
+										transaction._id,
+										transaction.customId
+									);
 								}}
 								className={`transactions__transaction ${
 									isBetween ? 'transaction-between-border' : ''

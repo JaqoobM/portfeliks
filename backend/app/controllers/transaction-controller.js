@@ -24,8 +24,11 @@ class TransactionControler {
 
 	async editTransaction(req, res) {
 		const id = req.body._id || req.body.customId;
-		console.log(id);
-		const transaction = await Transaction.findOne({ _id: id });
+
+		const transaction = await Transaction.findOne(
+			req.body._id ? { _id: id } : { customId: id }
+		);
+
 		transaction.name = req.body.name;
 		transaction.amount = req.body.amount;
 		transaction.date = req.body.date;

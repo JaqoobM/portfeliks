@@ -27,11 +27,15 @@ export default function AddTransactionModal(props) {
 		props.editedTransaction.date?.split('T')[0]
 	);
 
+	const [addDateValue, setAddDateValue] = useState(actualDate);
+
 	const changeHandler = (e, element) => {
 		if (element === 'name') {
 			setEditNameValue(e.target.value);
 		} else if (element === 'amount') {
 			setEditAmountValue(e.target.value);
+		} else if (element === 'addDate') {
+			setAddDateValue(e.target.value);
 		} else {
 			setEditDateValue(e.target.value);
 		}
@@ -50,7 +54,7 @@ export default function AddTransactionModal(props) {
 			result += characters[index];
 		}
 
-		props.formDataHandler({
+		props.addTransactionData({
 			name: addNameRef.current.value,
 			amount: addAmountRef.current.value,
 			date: addDateRef.current.value,
@@ -125,9 +129,9 @@ export default function AddTransactionModal(props) {
 							ref={addDateRef}
 							className='add-transaction__date-input'
 							type='date'
-							value={actualDate}
+							value={addDateValue}
 							onChange={(e) => {
-								changeHandler(e);
+								changeHandler(e, 'addDate');
 							}}></input>
 					</div>
 					<button className='add-transaction__list-btn' type='button'>
