@@ -37,31 +37,45 @@ function Transactions() {
 					'http://localhost:3000/api/transakcje'
 				);
 
-				const transactionData = [...transactions.data]
-
-				transactionData.sort((a, b) => {
-					const dateA = new Date(a.date);
-					const dateB = new Date(b.date);
-					return dateB - dateA;
+				const transactionData = transactions.data.map((transaction) => {
+					const newTransaction = {
+						_id: transaction._id,
+						name: transaction.name,
+						amount: transaction.amount,
+						date: transaction.date.split('T')[0],
+						customId: transaction.customId,
+					};
+					return newTransaction;
 				});
-				
+
 				setTransactions(transactionData);
 			} catch (e) {
 				console.log('Nie udało się pobrać');
 			}
 		};
-		
 
 		fetchTransactions();
 	}, []);
 
-	useEffect(() => {
-		transactions.sort((a, b) => {
-			const dateA = new Date(a.date);
-			const dateB = new Date(b.date);
-			return dateB - dateA;
-		});
-	}, [transactions]);
+	const sortTransactionsHandler = (transactions, sortType) => {
+		let sortedTransactions;
+
+		if (sortType === 'newest') {
+			sortedTransactions = [...transactions].sort((a, b) => {
+				const dateA = new Date(a.date);
+				const dateB = new Date(b.date);
+				return dateB - dateA;
+			});
+		} else if (sortType === 'oldest') {
+			sortedTransactions = [...transactions].sort((a, b) => {
+				const dateA = new Date(a.date);
+				const dateB = new Date(b.date);
+				return dateA - dateB;
+			});
+		}
+
+		setTransactions(sortedTransactions);
+	};
 
 	const addTransactionData = async (newTransaction) => {
 		try {
@@ -72,10 +86,10 @@ function Transactions() {
 				customId: newTransaction.customId,
 			});
 
-			setTransactions((prevTransactions) => [
-				...prevTransactions,
-				newTransaction,
-			]);
+			const newTransactions = [...transactions];
+			newTransactions.push(newTransaction);
+
+			sortTransactionsHandler(newTransactions, 'newest');
 		} catch (e) {
 			console.log('Nie udało się wysłać na serwer!', e);
 		}
@@ -91,11 +105,11 @@ function Transactions() {
 				customId: transaction.customId,
 			});
 
-			const transactionIndex = transactions.indexOf(editedTransaction);
+			const index = transactions.indexOf(editedTransaction);
 			const newTransactions = [...transactions];
-			newTransactions[transactionIndex] = transaction;
+			newTransactions[index] = transaction;
 
-			setTransactions(newTransactions);
+			sortTransactionsHandler(newTransactions, 'newest')
 		} catch {
 			console.log('Nie edytowano');
 		}
@@ -126,7 +140,7 @@ function Transactions() {
 					: transaction.customId !== editedTransaction.customId;
 			});
 
-			setTransactions(newTransactions);
+			sortTransactionsHandler(newTransactions, 'newest')
 		} catch {
 			console.log('Nie usunięto transakcji');
 		}

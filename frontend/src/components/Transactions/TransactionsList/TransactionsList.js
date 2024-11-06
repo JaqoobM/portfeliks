@@ -18,15 +18,6 @@ export default function TransactionsList(props) {
 				const index = transactions.findIndex((el) => {
 					return el === transaction;
 				});
-				
-				if (transactions.indexOf(transaction) === 0) {
-					transaction.date = transaction.date?.split('T')[0].split('-').reverse().join('.');
-					const futureTransaction = transactions[index + 1]
-					futureTransaction.date = futureTransaction?.date.split('T')[0].split('-').reverse().join('.')
-				} else if (transactions.length !== index + 1) {
-					const futureTransaction = transactions[index + 1]
-					futureTransaction.date = futureTransaction?.date.split('T')[0].split('-').reverse().join('.')
-				}
 
 				if (
 					transactions[index - 1]?.date !== transactions[index]?.date &&
@@ -69,7 +60,7 @@ export default function TransactionsList(props) {
 						{transaction === transactions[0] || isDifferent ? (
 							<>
 								<span className='transactions__date'>
-									{transaction.date}
+									{transaction.date.split('-').reverse().join('.')}
 								</span>
 
 								<div

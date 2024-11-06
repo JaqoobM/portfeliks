@@ -1,7 +1,16 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
-mongoose.set('strictQuery', false)
+// mongoose.set('strictQuery', false);
 
-const db = mongoose.connect('mongodb://127.0.0.1:27017/portfeliks')
+const connectDB = async () => {
+	try {
+		await mongoose.connect(process.env.MONGODB_URI);
+		console.log('Połączono z bazą danych');
+	} catch (e) {
+		console.log(e, 'Nie połączono się z bazą danych');
+	}
+};
 
-export default db
+export default connectDB;

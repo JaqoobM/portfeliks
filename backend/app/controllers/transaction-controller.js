@@ -14,12 +14,12 @@ class TransactionControler {
 			await transaction.save();
 			res.status(201).send('Zapisano transakcję');
 		} catch (e) {
-			console.log('Nie zapisano transakcji');
+			console.log(e, 'Nie zapisano transakcji');
 		}
 	}
 
 	async showTransactions(req, res) {
-		const transactions = await Transaction.find({});
+		const transactions = await Transaction.find({}).sort({date: -1});
 		res.json(transactions);
 	}
 

@@ -24,7 +24,7 @@ export default function AddTransactionModal(props) {
 		props.editedTransaction.amount
 	);
 	const [editDateValue, setEditDateValue] = useState(
-		props.editedTransaction.date.split('.').reverse().join('-')
+		props.editedTransaction.date
 	);
 
 	const [addDateValue, setAddDateValue] = useState(actualDate);
